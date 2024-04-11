@@ -1,4 +1,4 @@
-name: CD - Deploy Api-Gateway Service
+name: CD - Deploy Eureka-Server Service
 
 on:
   workflow_dispatch:

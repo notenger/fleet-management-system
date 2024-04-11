@@ -10,9 +10,9 @@ spring:
        gateway:
           routes:
             - id: customer
-              uri: lb://CUSTOMER
+              uri: lb://VEHICLE
               predicates:
-                - Path=/api/v1/customers/**
+                - Path=/api/v1/vehicles/**
 
 eureka:
     client:
