@@ -34,8 +34,10 @@ public class DeviceController {
 
     @PutMapping("/reserve")
     ReserveDeviceResponse reserveDevice(@RequestBody ReserveDeviceRequest request) throws InterruptedException {
-        Device device = deviceService.reserveAndGetAvailableDevice(request.vehicleId());
-        return new ReserveDeviceResponse(device.getID());
+//        Device device = deviceService.reserveAndGetAvailableDevice(request.vehicleId());
+//        return new ReserveDeviceResponse(device.getID());
+        log.info("new reserve request");
+        return new ReserveDeviceResponse(11);
     }
 
     @DeleteMapping("{deviceId}")

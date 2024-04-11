@@ -55,11 +55,11 @@ services:
       - "9411:9411"
     networks:
       - spring
-  vehicle:
+  vehicle-1:
     image: notenger/vehicle:latest
-    container_name: vehicle
+    container_name: vehicle-01
     ports:
-      - "8080:8080"
+      - "8091:8080"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
     networks:
@@ -68,11 +68,37 @@ services:
     depends_on:
       - zipkin
       - postgres
-  simulation:
-    image: notenger/simulation:latest
-    container_name: simulation
+  vehicle-2:
+    image: notenger/vehicle:latest
+    container_name: vehicle-02
     ports:
-      - "8081:8081"
+      - "8092:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring
+      - postgres
+    depends_on:
+      - zipkin
+      - postgres
+  simulation-1:
+    image: notenger/simulation:latest
+    container_name: simulation-01
+    ports:
+      - "8093:8081"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring
+    depends_on:
+      - zipkin
+      - postgres
+      - rabbitmq
+  simulation-2:
+    image: notenger/simulation:latest
+    container_name: simulation-02
+    ports:
+      - "8094:8081"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
     networks:
