@@ -2,5 +2,15 @@ server:
   port: 8081
 
 spring:
+  zipkin:
+    base-url: http://zipkin:9411
   rabbitmq:
     addresses: rabbitmq:5672
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka
+    fetch-registry: true
+    register-with-eureka: true
+    enabled: false

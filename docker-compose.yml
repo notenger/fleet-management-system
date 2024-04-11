@@ -34,6 +34,8 @@ services:
       - SPRING_PROFILES_ACTIVE=docker
     networks:
       - spring
+    depends_on:
+      - zipkin
   apigw:
     image: notenger/apigw:latest
     container_name: apigw
@@ -44,9 +46,17 @@ services:
     networks:
       - spring
     depends_on:
+      - zipkin
       - eureka-server
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: zipkin
+    ports:
+      - "9411:9411"
+    networks:
+      - spring
   vehicle:
-    image: notenger/vehicle:08.04.2024.08.22.54
+    image: notenger/vehicle:latest
     container_name: vehicle
     ports:
       - "8080:8080"
@@ -56,9 +66,10 @@ services:
       - spring
       - postgres
     depends_on:
+      - zipkin
       - postgres
   simulation:
-    image: notenger/simulation:08.04.2024.08.19.14
+    image: notenger/simulation:latest
     container_name: simulation
     ports:
       - "8081:8081"
@@ -67,10 +78,11 @@ services:
     networks:
       - spring
     depends_on:
+      - zipkin
       - postgres
       - rabbitmq
   telematics:
-    image: notenger/telematics:08.04.2024.08.19.12
+    image: notenger/telematics:latest
     container_name: telematics
     ports:
       - "8082:8082"
@@ -80,6 +92,7 @@ services:
     networks:
       - spring
     depends_on:
+      - zipkin
       - rabbitmq
 
 networks:
