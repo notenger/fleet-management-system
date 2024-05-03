@@ -13,7 +13,7 @@ env:
   ECS_CLUSTER: FmsCluster
   ECR_REPOSITORY: simulation
   ECS_SERVICE: simulation
-  ECS_TASK_DEFINITION: aws/fms-simulation-task-definition.json
+  ECS_TASK_DEFINITION: aws/fms-simulation-task-definiton.json
   CONTAINER_NAME: simulation
 
 jobs:
