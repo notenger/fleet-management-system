@@ -54,6 +54,7 @@ jobs:
         run: echo "BUILD_NUMBER=$(date '+%d.%m.%Y.%H.%M.%S')" >> $GITHUB_OUTPUT
 
       - name: Build Package Push with Maven
+        id: build-image
         env:
           IMAGE_TAG: ${{ steps.build-number.outputs.BUILD_NUMBER }}
         run: |
