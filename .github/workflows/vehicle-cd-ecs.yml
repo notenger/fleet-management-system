@@ -70,6 +70,10 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           IMAGE_TAG: ${{ steps.build-number.outputs.BUILD_NUMBER }}
         run: |
+          echo $ECR_REGISTRY
+          echo $ECR_REPOSITORY
+          echo $IMAGE_TAG
+
           mvn -ntp -B verify -pl vehicle -am \
             -Ddocker.image.username=$ECR_REGISTRY \
             -Ddocker.image.name=$ECR_REPOSITORY \
