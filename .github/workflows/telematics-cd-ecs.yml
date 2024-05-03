@@ -14,7 +14,7 @@ env:
   ECS_SERVICE: telematics
   ECS_CLUSTER: FmsCluster
   ECS_TASK_DEFINITION: aws/fms-telematics-task-definition.json
-  CONTAINER_NAME: telematics
+  CONTAINER_NAME: telematics-service
 
 jobs:
   deploy:

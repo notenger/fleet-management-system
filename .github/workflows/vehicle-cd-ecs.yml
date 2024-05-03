@@ -14,7 +14,7 @@ env:
   ECS_SERVICE: vehicle
   ECS_CLUSTER: FmsCluster
   ECS_TASK_DEFINITION: aws/fms-vehicle-task-definition.json
-  CONTAINER_NAME: vehicle
+  CONTAINER_NAME: vehicle-service
 
 jobs:
   deploy:
