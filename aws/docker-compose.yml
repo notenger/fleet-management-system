@@ -9,7 +9,7 @@ services:
 #    networks:
 #      - spring
   simulation:
-    image: notenger/simulation:09.04.2024.19.49.08
+    image: notenger/simulation:11.04.2024.13.45.19
     container_name: simulation
     ports:
       - "8081:8081"
