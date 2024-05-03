@@ -71,10 +71,11 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           IMAGE_TAG: ${{ steps.build-number.outputs.BUILD_NUMBER }}
         run: |
-          mvn -ntp -B verify -pl vehicle -am -D \
-            docker.image.username=$ECR_REGISTRY \
-            docker.image.name=$ECR_REPOSITORY \
-            docker.image.tag=${{steps.build-number.outputs.BUILD_NUMBER}} jib:build
+          mvn -ntp -B verify -pl vehicle -am \
+            -Ddocker.image.username=$ECR_REGISTRY \
+            -Ddocker.image.name=$ECR_REPOSITORY \
+            -Ddocker.image.tag=$IMAGE_TAG \
+            jib:build
           echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
 
       - name: Fill in the new image ID in the Amazon ECS task definition
