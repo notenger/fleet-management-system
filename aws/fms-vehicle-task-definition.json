@@ -22,11 +22,11 @@
                 },
                 {
                     "name": "CLIENTS_DEVICE_NAME",
-                    "value": "10f5bdbefe1c46528a975a05029dfb43.simulation.fms-namespace"
+                    "value": "8f659957f2d140898628249adc31f81a.simulation.fms-namespace"
                 },
                 {
                     "name": "CLIENTS_TELEMATICS_NAME",
-                    "value": "c368a49732c8444d86aeb3ff7ddb4919.telematics.fms-namespace"
+                    "value": "334fd8dfcb6647838579cb7942a9868c.telematics.fms-namespace"
                 }
             ],
             "mountPoints": [],

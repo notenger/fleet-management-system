@@ -13,7 +13,7 @@ import java.util.List;
         path = "api/v1/devices",
         configuration = CustomErrorDecoder.class
 )
-@LoadBalancerClient(name = "simulation", configuration = LoadBalancerConfiguration.class)
+//@LoadBalancerClient(name = "simulation", configuration = LoadBalancerConfiguration.class)
 public interface DeviceClient {
 
     @PostMapping
