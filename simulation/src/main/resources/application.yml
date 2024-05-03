@@ -1,13 +1,19 @@
 server:
   port: 8081
+  error:
+    include-message: always
+
+cors:
+  allowed-origins: "*"
+  allowed-methods: "*"
 
 spring:
   application:
     name: simulation
-  zipkin:
-    base-url: http://localhost:9411
   rabbitmq:
-    addresses: localhost:5672
+    username: notenger
+    password: Xweqf!(JYtJuMRGN
+    addresses: amqps://b-315e2490-f1a2-4b07-8ad4-b2ac61986ef2.mq.eu-central-1.amazonaws.com:5671
   profiles:
     active: default
 

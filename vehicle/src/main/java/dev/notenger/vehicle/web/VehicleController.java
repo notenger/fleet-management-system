@@ -1,17 +1,17 @@
 package dev.notenger.vehicle.web;
 
 import dev.notenger.clients.vehicle.AddVehicleRequest;
-import dev.notenger.clients.vehicle.AddVehicleResponse;
 import dev.notenger.clients.vehicle.UpdateVehicleRequest;
 import dev.notenger.vehicle.entity.Vehicle;
 import dev.notenger.vehicle.service.VehicleService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@CrossOrigin
+@Slf4j
 @RequestMapping(path = "api/v1/vehicles")
 @RequiredArgsConstructor
 public class VehicleController {
@@ -19,23 +19,19 @@ public class VehicleController {
     private final VehicleService vehicleService;
 
     @PostMapping
-    public AddVehicleResponse addVehicle(@RequestBody AddVehicleRequest request) {
-        Vehicle vehicle = vehicleService.addVehicle(request.vin(), request.make(), request.model(), request.year());
-        return new AddVehicleResponse(vehicle.getId());
-    }
-
-    @PutMapping("bind/{vehicleId}")
-    public void bindToDevice(@PathVariable("vehicleId") Integer vehicleId) {
-        vehicleService.bindToDevice(vehicleId);
+    public void addVehicle(@RequestBody AddVehicleRequest request) {
+        log.info("add new vehicle request {}", request);
+        vehicleService.addVehicle(
+                request.vin(), request.make(), request.model(), request.year(), request.groupName(), request.deviceId());
     }
 
     @GetMapping
-    public List<VehicleDTO> getVehicles() {
+    public List<Vehicle> getVehicles() {
         return vehicleService.getAllVehicles();
     }
 
     @GetMapping("{vehicleId}")
-    public VehicleDTO getVehicle(@PathVariable Integer vehicleId) {
+    public Vehicle getVehicle(@PathVariable Integer vehicleId) {
         return vehicleService.getVehicle(vehicleId);
     }
 
@@ -45,6 +41,11 @@ public class VehicleController {
             @RequestBody UpdateVehicleRequest updateRequest) {
         vehicleService.updateVehicle(
                 vehicleId, updateRequest.vin(), updateRequest.make(), updateRequest.model(), updateRequest.year());
+    }
+
+    @PutMapping("update-odometer/{vehicleId}")
+    public void updateOdometer(@PathVariable("vehicleId") Integer vehicleId) {
+        vehicleService.updateOdometer(vehicleId);
     }
 
     @DeleteMapping("{vehicleId}")

@@ -22,5 +22,3 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format-sql: true
     show-sql: true
-  zipkin:
-    base-url: http://zipkin:9411

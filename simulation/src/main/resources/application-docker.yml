@@ -2,8 +2,6 @@ server:
   port: 8081
 
 spring:
-  zipkin:
-    base-url: http://zipkin:9411
   rabbitmq:
     addresses: rabbitmq:5672
 

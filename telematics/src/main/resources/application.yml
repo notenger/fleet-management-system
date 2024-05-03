@@ -1,6 +1,10 @@
 server:
   port: 8082
 
+cors:
+  allowed-origins: "*"
+  allowed-methods: "*"
+
 spring:
   application:
     name: telematics
@@ -12,9 +16,10 @@ spring:
     embedded:
       version: 4.0.2
   rabbitmq:
-    addresses: localhost:5672
-  zipkin:
-    base-url: http://localhost:9411
+    username: notenger
+    password: Xweqf!(JYtJuMRGN
+#    addresses: localhost:5672
+    addresses: amqps://b-315e2490-f1a2-4b07-8ad4-b2ac61986ef2.mq.eu-central-1.amazonaws.com:5671
   profiles:
     active: default
 
@@ -22,9 +27,9 @@ rabbitmq:
   exchanges:
     internal: internal.exchange
   queues:
-    notification: notification.queue
+    telematics: telematics.queue
   routing-keys:
-    internal-notification: internal.notification.routing-key
+    internal-telematics: internal.telematics.routing-key
 
 de:
   flapdoodle:

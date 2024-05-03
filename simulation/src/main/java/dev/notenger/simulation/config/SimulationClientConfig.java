@@ -38,7 +38,7 @@ public class SimulationClientConfig implements SimulationCallback {
         rabbitMQMessageProducer.publish(
                 message,
                 "internal.exchange",
-                "internal.notification.routing-key"
+                "internal.telematics.routing-key"
         );
     }
 

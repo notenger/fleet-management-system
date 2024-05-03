@@ -1,8 +1,6 @@
 spring:
   application:
     name: eureka-server
-  zipkin:
-    base-url: http://zipkin:9411
 
 server:
   port: 8761

@@ -5,7 +5,6 @@ import jakarta.persistence.Table;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-
 @Data
 @SuperBuilder
 @Entity
@@ -17,5 +16,7 @@ public class Vehicle extends BaseEntity {
     private String make;
     private String model;
     private Integer year;
+    private String groupName;
     private Integer deviceId;
+    private Double lastOdometerReading;
 }

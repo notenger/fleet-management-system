@@ -27,7 +27,6 @@ import java.util.concurrent.atomic.AtomicReference;
 @Slf4j
 public class Device extends DeviceAgent {
     private Integer ID;
-    private Integer vehicleId;
     private String serialNumber;
     private Double averageSpeed;
     private Boolean available;
@@ -35,7 +34,6 @@ public class Device extends DeviceAgent {
     private double fuelGauge;
     private double speedometer;
     private Point lastLocation;
-    private LocalDateTime lastTime;
 
     private static final double BASE_CONSUMPTION_RATE = 0.06;
     private static final double SPEED_LIMIT = 90;
@@ -45,10 +43,10 @@ public class Device extends DeviceAgent {
 
     @Override
     public void onSensorsDataReceived() {
+        if (available) return;
         updateGauges();
         SimulationMessage message = new SimulationMessage(
                     ID,
-                    vehicleId,
                     getLatitude(),
                     getLongitude(),
                     getGISHeading(),
@@ -63,8 +61,7 @@ public class Device extends DeviceAgent {
     public void updateGauges() {
         Point currentLocation = new Point().setLatLon(getLatitude(), getLongitude());
         double distanceTraveled = calculateDistance(lastLocation, currentLocation); // KM
-//        double timeTaken = calculateTime(lastTime, currentTime); // sec
-        double actualSpeed = getSpeed(KPH); // calculateSpeed(distanceTraveled, timeTaken);
+        double actualSpeed = getSpeed(KPH);
 
         updateOdometer(distanceTraveled);
         updateFuelGauge(distanceTraveled, actualSpeed);
@@ -103,18 +100,6 @@ public class Device extends DeviceAgent {
         return currentLocation.distanceGIS(lastLocation, KILOMETER);
     }
 
-    private double calculateTime(LocalDateTime lastTime, LocalDateTime currentTime) {
-        Duration duration = Duration.between(lastTime, currentTime);
-        return duration.toMillis() / (1000.0 * 60 * 60);
-    }
-
-    private double calculateSpeed(double distanceKm, double timeTaken) {
-        if (timeTaken <= 0) {
-            return 0;
-        }
-        return distanceKm / timeTaken;
-    }
-
     @Override
     public void onChangeSpeed() {
         changeSpeed();
@@ -134,15 +119,29 @@ public class Device extends DeviceAgent {
 
     @Override
     public void onStartup() {
-        setLocation(lastLocation);
+        noteAvailable();
     }
 
     public void noteAvailable() {
         this.available = true;
     }
 
-    public void reserveForVehicle(Integer vehicleId) {
-        this.vehicleId = vehicleId;
+    public void noteUnavailable() {
         this.available = false;
+    }
+
+    public void reset() {
+        this.odometer = 0;
+        this.fuelGauge = 0;
+        this.speedometer = 0;
+    }
+
+    public void activate() {
+        setLocation(lastLocation);
+        onArrival();
+    }
+
+    public void deactivate() {
+        stop();
     }
 }

@@ -14,13 +14,14 @@ spring:
   rabbitmq:
     addresses: rabbitmq:5672
 
+
 rabbitmq:
   exchanges:
     internal: internal.exchange
   queues:
-    notification: notification.queue
+    telematics: telematics.queue
   routing-keys:
-    internal-notification: internal.notification.routing-key
+    internal-telematics: internal.telematics.routing-key
 
 de:
   flapdoodle:

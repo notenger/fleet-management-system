@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -42,11 +43,9 @@ public class TelematicsService {
 
     private TelemetryDTO getDeviceTelemetrySummary() {
         List<Telemetry> telemetryList = mongoTemplate.findAll(Telemetry.class);
-        // Group telemetry objects by deviceId
         Map<Integer, Telemetry> latestTelemetryByDeviceId = telemetryList.stream()
                 .collect(Collectors.toMap(Telemetry::getDeviceId, Function.identity(), BinaryOperator.maxBy(Comparator.comparingDouble(Telemetry::getTimestamp))));
-
-        // Calculate average speed and odometer for each group
+        // todo: discard too old records
         double totalAverageSpeed = latestTelemetryByDeviceId.values().stream()
                 .mapToDouble(Telemetry::getSpeedometer)
                 .average()
@@ -62,8 +61,18 @@ public class TelematicsService {
                 .average()
                 .orElse(0);
 
-        // Return a TelemetrySummary object with the calculated averages
         return new TelemetryDTO(totalAverageSpeed, totalAverageOdometer, totalAverageFuelGauge);
+    }
+
+    public Double getLastOdometerReadingByDeviceId(Integer deviceId) {
+        List<Telemetry> telemetryList = mongoTemplate.findAll(Telemetry.class);
+
+        Telemetry telemetry = telemetryList.stream()
+                .filter(telemetry1 -> Objects.equals(telemetry1.getDeviceId(), deviceId))
+                .max(Comparator.comparingDouble(Telemetry::getTimestamp))
+                .orElseThrow(null);
+
+        return telemetry.getOdometer();
     }
 
 }

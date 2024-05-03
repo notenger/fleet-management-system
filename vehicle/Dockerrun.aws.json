@@ -1,15 +1,15 @@
 {
-  "AWSEBDockerrunVersion": 3,
+  "AWSEBDockerrunVersion": 2,
   "containerDefinitions": [
     {
-      "name": "fleet-ms-vehicle-service",
-      "image": "notenger/fleet-ms-vehicle-service",
+      "name": "vehicle-service",
+      "image": "notenger/vehicle:11.04.2024.12.42.08",
       "essential": true,
       "memory": 512,
       "portMappings": [
         {
           "hostPort": 80,
-          "containerPort": 8082
+          "containerPort": 8080
         }
       ],
       "environment": [

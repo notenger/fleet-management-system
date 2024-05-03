@@ -10,7 +10,6 @@ import dev.notenger.clients.vehicle.exception.NoChangesDetectedException;
 import dev.notenger.clients.vehicle.exception.VehicleNotFoundException;
 import dev.notenger.vehicle.entity.Vehicle;
 import dev.notenger.vehicle.repository.VehicleDao;
-import dev.notenger.vehicle.web.VehicleDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,14 +30,14 @@ class VehicleServiceTest {
     VehicleService underTest;
     @Mock VehicleDao vehicleDao;
     @Mock DeviceClient deviceClient;
-    VehicleDTOMapper vehicleDTOMapper = new VehicleDTOMapper();
+    @Mock TelematicsClient telematicsClient;
 
     protected static final Faker FAKER = new Faker();
-    private static final Random random = new Random();
+    private static final Random RANDOM = new Random();
 
     @BeforeEach
     void setUp() {
-        underTest = new VehicleService(vehicleDao, vehicleDTOMapper, deviceClient);
+        underTest = new VehicleService(vehicleDao, deviceClient, telematicsClient);
     }
 
     @Test
@@ -47,11 +46,14 @@ class VehicleServiceTest {
         String fakeVIN = FAKER.bothify("1##?#??######");
         String fakeMake = FAKER.company().name();
         String fakeModel = FAKER.lorem().word();
+        Integer fakeYear = RANDOM.nextInt(1990, 2023);
+        String fakeGroupName = FAKER.address().city();
+        Integer fakeDeviceId = RANDOM.nextInt(100);
 
         when(vehicleDao.existsVehicleByVin(fakeVIN)).thenReturn(false);
 
         // When
-        underTest.addVehicle(fakeVIN, fakeMake, fakeModel, null);
+        underTest.addVehicle(fakeVIN, fakeMake, fakeModel, fakeYear, fakeGroupName, fakeDeviceId);
 
         // Then
         ArgumentCaptor<Vehicle> vehicleArgumentCaptor = ArgumentCaptor.forClass(Vehicle.class);
@@ -64,6 +66,9 @@ class VehicleServiceTest {
         assertThat(capturedVehicle.getVin()).isEqualTo(fakeVIN);
         assertThat(capturedVehicle.getMake()).isEqualTo(fakeMake);
         assertThat(capturedVehicle.getModel()).isEqualTo(fakeModel);
+        assertThat(capturedVehicle.getYear()).isEqualTo(fakeYear);
+        assertThat(capturedVehicle.getGroupName()).isEqualTo(fakeGroupName);
+        assertThat(capturedVehicle.getDeviceId()).isEqualTo(fakeDeviceId);
     }
 
     @Test
@@ -72,12 +77,15 @@ class VehicleServiceTest {
         String fakeVIN = FAKER.bothify("1##?#??######");
         String fakeMake = FAKER.company().name();
         String fakeModel = FAKER.lorem().word();
+        Integer fakeYear = RANDOM.nextInt(1990, 2023);
+        String fakeGroupName = FAKER.address().city();
+        Integer fakeDeviceId = RANDOM.nextInt(100);
 
         when(vehicleDao.existsVehicleByVin(fakeVIN)).thenReturn(true);
 
         // When
-        assertThatThrownBy(() -> underTest.addVehicle(fakeVIN, fakeMake, fakeModel, null))
-                .isInstanceOf(DuplicateVehicleException.class).hasMessage("vin already taken");
+        assertThatThrownBy(() -> underTest.addVehicle(fakeVIN, fakeMake, fakeModel, fakeYear, fakeGroupName, fakeDeviceId))
+                .isInstanceOf(DuplicateVehicleException.class).hasMessage("vin already present");
 
         // Then
         verify(vehicleDao, never()).insertVehicle(any());
@@ -90,20 +98,25 @@ class VehicleServiceTest {
         String fakeVIN = FAKER.bothify("1##?#??######");
         String fakeMake = FAKER.company().name();
         String fakeModel = FAKER.lorem().word();
+        Integer fakeYear = RANDOM.nextInt(1990, 2023);
+        String fakeGroupName = FAKER.address().city();
+        Integer fakeDeviceId = RANDOM.nextInt(100);
 
-        Vehicle vehicle = Vehicle
+        Vehicle expected = Vehicle
                 .builder()
                 .id(id)
                 .vin(fakeVIN)
                 .make(fakeMake)
                 .model(fakeModel)
+                .year(fakeYear)
+                .groupName(fakeGroupName)
+                .deviceId(fakeDeviceId)
                 .build();
 
-        when(vehicleDao.selectVehicleById(id)).thenReturn(Optional.of(vehicle));
-        VehicleDTO expected = vehicleDTOMapper.apply(vehicle);
+        when(vehicleDao.selectVehicleById(id)).thenReturn(Optional.of(expected));
 
         // When
-        VehicleDTO actual = underTest.getVehicle(id);
+        Vehicle actual = underTest.getVehicle(id);
 
         // Then
         assertThat(actual).isEqualTo(expected);
@@ -338,7 +351,7 @@ class VehicleServiceTest {
 
         // When
         assertThatThrownBy(() -> underTest.updateVehicle(id, newVIN, null, null, null))
-                .isInstanceOf(DuplicateVehicleException.class).hasMessage("vin already taken");
+                .isInstanceOf(DuplicateVehicleException.class).hasMessage("vin already present");
 
         // Then
         verify(vehicleDao, never()).updateVehicle(any());
@@ -382,7 +395,12 @@ class VehicleServiceTest {
         // Given
         int id = 10;
 
-        when(vehicleDao.existsVehicleById(id)).thenReturn(true);
+        Vehicle vehicle = Vehicle
+                .builder()
+                .id(id)
+                .build();
+
+        when(vehicleDao.selectVehicleById(id)).thenReturn(Optional.of(vehicle));
 
         // When
         underTest.deleteVehicle(id);
@@ -395,7 +413,12 @@ class VehicleServiceTest {
         // Given
         int id = 10;
 
-        when(vehicleDao.existsVehicleById(id)).thenReturn(false);
+        Vehicle vehicle = Vehicle
+                .builder()
+                .id(id)
+                .build();
+
+        when(vehicleDao.selectVehicleById(id)).thenReturn(Optional.empty());
 
         // When
         assertThatThrownBy(() -> underTest.deleteVehicle(id))

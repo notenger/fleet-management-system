@@ -21,7 +21,7 @@ import {
   getVehicles,
   getPlaces,
   deleteVehicle,
-} from "../../services/client.js";
+} from "../../services/httpClient.js";
 import SockJsClient from "react-stomp";
 import L from "leaflet";
 import "leaflet-rotatedmarker";
@@ -45,8 +45,9 @@ const landmarkIcon = new Icon({
   iconSize: [38, 38],
 });
 
-const SOCKET_URL =
-  "https://fmvs.eu-central-1.elasticbeanstalk.com/telematics/ws-message";
+// const SOCKET_URL =
+//   "https://fmvs.eu-central-1.elasticbeanstalk.com/telematics/ws-message";
+const SOCKET_URL = "http://localhost:8082/ws-message";
 let onConnected = () => {
   console.log("Connected!!");
 };
@@ -70,7 +71,7 @@ export default function GISMap() {
     getVehicles()
       .then((res) => {
         setVehicles(res.data);
-        console.log(res.data);
+        console.log(res);
       })
       .catch((err) => {
         console.log("Error trying fetch vehicles", JSON.stringify(err));
@@ -80,16 +81,16 @@ export default function GISMap() {
 
   useEffect(() => {
     fetchLocations();
-    // fetchVehicles();
+    fetchVehicles();
     console.log(vehicles);
   }, []);
 
   const handleGeolocationMessage = (message) => {
-    const vehicle = vehicles.find((veh) => veh.id === message.vehicleId);
+    const vehicle = vehicles.find((veh) => veh.deviceId === message.deviceId);
 
     if (vehicle) {
       const updatedVehicles = vehicles.map((veh) =>
-        veh.id === message.vehicleId
+        veh.deviceId === message.deviceId
           ? {
               ...veh,
               latitude: message.latitude,
@@ -109,12 +110,6 @@ export default function GISMap() {
     console.log(JSON.stringify(vehicles));
     handleGeolocationMessage(msg);
   };
-
-  const polyline = [
-    [57.913534, 59.990375],
-    [57.911389, 59.987534],
-    [57.911612, 59.98737],
-  ];
 
   const fillBlueOptions = { color: "red", dashArray: [10, 10] };
   const blackOptions = { color: "black" };

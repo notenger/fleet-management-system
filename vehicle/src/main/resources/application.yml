@@ -6,8 +6,6 @@ server:
 cors:
   allowed-origins: "*"
   allowed-methods: "*"
-  allowed-headers: "*"
-  exposed-headers: "*"
 
 spring:
   application:
@@ -24,8 +22,6 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format-sql: true
     show-sql: true
-  zipkin:
-    base-url: http://localhost:9411
   profiles:
     active: default
 

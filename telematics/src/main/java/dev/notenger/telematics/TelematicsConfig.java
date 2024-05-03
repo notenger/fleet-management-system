@@ -1,5 +1,6 @@
 package dev.notenger.telematics;
 
+import lombok.Getter;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
@@ -13,16 +14,17 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @EnableScheduling
 @Configuration
+@Getter
 public class TelematicsConfig {
 
     @Value("${rabbitmq.exchanges.internal}")
     private String internalExchange;
 
-    @Value("${rabbitmq.queues.notification}")
-    private String notificationQueue;
+    @Value("${rabbitmq.queues.telematics}")
+    private String telematicsQueue;
 
-    @Value("${rabbitmq.routing-keys.internal-notification}")
-    private String internalNotificationRoutingKey;
+    @Value("${rabbitmq.routing-keys.internal-telematics}")
+    private String internalTelematicsRoutingKey;
 
     @Bean
     public TopicExchange internalTopicExchange() {
@@ -30,27 +32,15 @@ public class TelematicsConfig {
     }
 
     @Bean
-    public Queue notificationQueue() {
-        return new Queue(this.notificationQueue);
+    public Queue telematicsQueue() {
+        return new Queue(this.telematicsQueue);
     }
 
     @Bean
-    public Binding internalToNotificationBinding() {
+    public Binding internalTotelematicsBinding() {
         return BindingBuilder
-                .bind(notificationQueue())
+                .bind(telematicsQueue())
                 .to(internalTopicExchange())
-                .with(this.internalNotificationRoutingKey);
-    }
-
-    public String getInternalExchange() {
-        return internalExchange;
-    }
-
-    public String getNotificationQueue() {
-        return notificationQueue;
-    }
-
-    public String getInternalNotificationRoutingKey() {
-        return internalNotificationRoutingKey;
+                .with(this.internalTelematicsRoutingKey);
     }
 }

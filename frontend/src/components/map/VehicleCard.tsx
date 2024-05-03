@@ -9,7 +9,8 @@ import {
   deleteDevice,
   updateDevice,
   getDevice,
-} from "../../services/client.js";
+  getAvailableDevices,
+} from "../../services/httpClient.js";
 
 export default function VehicleCard({ vehicle, fetchVehicles }) {
   const [vehicleSpeed, setVehicleSpeed] = useState();
@@ -25,6 +26,24 @@ export default function VehicleCard({ vehicle, fetchVehicles }) {
       })
       .finally(() => {});
   }, []);
+
+  const handleDeleteVehicleClick = async () => {
+    try {
+      await deleteVehicle(vehicle.id);
+
+      const availableDevicesResponse = await getAvailableDevices();
+      const availableDevices = availableDevicesResponse.data;
+
+      if (availableDevices.length > 2) {
+        const randomIndex = Math.floor(Math.random() * availableDevices.length);
+        const randomDevice = availableDevices[randomIndex];
+        await deleteDevice(randomDevice.id);
+      }
+      await fetchVehicles();
+    } catch (error) {
+      console.error("Error deleting vehicle and devices:", error);
+    }
+  };
 
   return (
     <Stack spacing={2}>
@@ -51,26 +70,7 @@ export default function VehicleCard({ vehicle, fetchVehicles }) {
       <Button
         variant="outlined"
         startIcon={<DeleteIcon />}
-        onClick={() => {
-          deleteVehicle(vehicle.id)
-            .then((res) => {
-              console.log(res);
-              fetchVehicles();
-            })
-            .catch((err) => {
-              console.log(err);
-            })
-            .finally(() => {});
-
-          deleteDevice(vehicle.deviceId)
-            .then((res) => {
-              console.log(res);
-            })
-            .catch((err) => {
-              console.log(err);
-            })
-            .finally(() => {});
-        }}
+        onClick={handleDeleteVehicleClick}
       >
         Delete
       </Button>

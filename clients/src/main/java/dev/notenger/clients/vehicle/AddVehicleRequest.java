@@ -4,5 +4,7 @@ public record AddVehicleRequest(
         String vin,
         String make,
         String model,
-        Integer year) {
+        Integer year,
+        String groupName,
+        Integer deviceId) {
 }

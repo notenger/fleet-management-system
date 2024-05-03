@@ -1,0 +1,77 @@
+name: CD - Deploy Vehicle Service To ECS
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - vehicle/**
+
+env:
+  AWS_REGION: eu-central-1
+  ECR_REPOSITORY: vehicle
+  ECR_REGISTRY: notenger
+  ECS_SERVICE: vehicle
+  ECS_CLUSTER: FmsCluster
+  ECS_TASK_DEFINITION: aws/FMS-revision6-AWS-CLI-input.json
+  CONTAINER_NAME: vehicle-service
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:14.1
+        env:
+          POSTGRES_USER: notenger
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: vehicle
+        ports:
+          - 5332:5432
+        options:
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '18'
+          cache: 'maven'
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
+
+      - name: Set build number
+        id: build-number
+        run: echo "BUILD_NUMBER=$(date '+%d.%m.%Y.%H.%M.%S')" >> $GITHUB_OUTPUT
+
+      - name: Build Package Push with Maven
+        env:
+          IMAGE_TAG: ${{ steps.build-number.outputs.BUILD_NUMBER }}
+        run: |
+          mvn -ntp -B verify -pl vehicle -am -D docker.image.tag=${{steps.build-number.outputs.BUILD_NUMBER}} jib:build
+          echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+
+      - name: Fill in the new image ID in the Amazon ECS task definition
+        id: task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@c804dfbdd57f713b6c079302a4c01db7017a36fc
+        with:
+          task-definition: ${{ env.ECS_TASK_DEFINITION }}
+          container-name: ${{ env.CONTAINER_NAME }}
+          image: ${{ steps.build-image.outputs.image }}
+
+      - name: Deploy Amazon ECS task definition
+        uses: aws-actions/amazon-ecs-deploy-task-definition@df9643053eda01f169e64a0e60233aacca83799a
+        with:
+          task-definition: ${{ steps.task-def.outputs.task-definition }}
+          service: ${{ env.ECS_SERVICE }}
+          cluster: ${{ env.ECS_CLUSTER }}
+          wait-for-service-stability: true
