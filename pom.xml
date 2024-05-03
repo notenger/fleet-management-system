@@ -26,8 +26,8 @@
         <spring.boot.dependencies.version>3.0.0</spring.boot.dependencies.version>
         <spring.cloud-version>2022.0.3</spring.cloud-version>
         <spring-security.version>6.0.0</spring-security.version>
-        <docker.username>notenger</docker.username>
-        <docker.image.name>${project.artifactId}</docker.image.name>
+        <docker.image.registry/>
+        <docker.image.repository/>
         <docker.image.tag/>
     </properties>
 
@@ -165,10 +165,11 @@
                             </platforms>
                         </from>
                         <to>
-                            <image>${docker.username}/${docker.image.name}:${docker.image.tag}</image>
-                            <tags>
-                                <tag>latest</tag>
-                            </tags>
+<!--                            <image>${docker.username}/${docker.image.name}:${docker.image.tag}</image>-->
+                            <image>${docker.image.registry}/${docker.image.repository}:${docker.image.tag}</image>
+<!--                            <tags>-->
+<!--                                <tag>latest</tag>-->
+<!--                            </tags>-->
                         </to>
                     </configuration>
                     <executions>
