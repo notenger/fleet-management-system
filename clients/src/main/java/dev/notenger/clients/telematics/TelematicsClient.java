@@ -7,6 +7,7 @@ import java.util.List;
 
 @FeignClient(
         name = "${clients.telematics.name}",
+//        name = "telematics",
         path = "api/v1/telemetry"
 )
 public interface TelematicsClient {
