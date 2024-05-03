@@ -1,4 +1,4 @@
-name: CD - Deploy Vehicle Service To ECS
+name: CD - Deploy Telematics Service To ECS
 
 on:
   workflow_dispatch:
@@ -6,33 +6,19 @@ on:
     branches:
       - main
     paths:
-      - vehicle/**
+      - telematics/**
 
 env:
   AWS_REGION: eu-central-1
-  ECR_REPOSITORY: vehicle
-  ECS_SERVICE: vehicle
+  ECR_REPOSITORY: telematics
+  ECS_SERVICE: telematics
   ECS_CLUSTER: FmsCluster
-  ECS_TASK_DEFINITION: aws/fms-vehicle-task-definition.json
-  CONTAINER_NAME: vehicle
+  ECS_TASK_DEFINITION: aws/fms-telematics-task-definition.json
+  CONTAINER_NAME: telematics
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    services:
-      postgres:
-        image: postgres:14.1
-        env:
-          POSTGRES_USER: notenger
-          POSTGRES_PASSWORD: password
-          POSTGRES_DB: vehicle
-        ports:
-          - 5332:5432
-        options:
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
 
     steps:
       - uses: actions/checkout@v3
@@ -68,7 +54,7 @@ jobs:
           echo $ECR_REPOSITORY
           echo $IMAGE_TAG
 
-          mvn -ntp -B verify -pl vehicle -am \
+          mvn -ntp -B verify -pl telematics -am \
             -Ddocker.image.registry=$ECR_REGISTRY \
             -Ddocker.image.repository=$ECR_REPOSITORY \
             -Ddocker.image.tag=$IMAGE_TAG \

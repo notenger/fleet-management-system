@@ -6,9 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @FeignClient(
-        name = "telematics",
+        name = "${clients.telematics.name}",
         path = "api/v1/telemetry"
-//        url = "${clients.telematics.url}"
 )
 public interface TelematicsClient {
 

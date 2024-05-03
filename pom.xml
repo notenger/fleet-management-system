@@ -165,11 +165,10 @@
                             </platforms>
                         </from>
                         <to>
-<!--                            <image>${docker.username}/${docker.image.name}:${docker.image.tag}</image>-->
                             <image>${docker.image.registry}/${docker.image.repository}:${docker.image.tag}</image>
-<!--                            <tags>-->
-<!--                                <tag>latest</tag>-->
-<!--                            </tags>-->
+                            <tags>
+                                <tag>latest</tag>
+                            </tags>
                         </to>
                     </configuration>
                     <executions>

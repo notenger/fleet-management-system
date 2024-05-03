@@ -9,8 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @FeignClient(
-        name = "simulation",
-//        url = "${clients.device.url}",
+        name = "${clients.device.name}",
         path = "api/v1/devices",
         configuration = CustomErrorDecoder.class
 )
