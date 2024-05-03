@@ -11,7 +11,6 @@ on:
 env:
   AWS_REGION: eu-central-1
   ECR_REPOSITORY: vehicle
-  ECR_REGISTRY: notenger
   ECS_SERVICE: vehicle
   ECS_CLUSTER: FmsCluster
   ECS_TASK_DEFINITION: aws/FMS-revision6-AWS-CLI-input.json
