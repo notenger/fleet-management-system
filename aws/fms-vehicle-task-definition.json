@@ -21,12 +21,12 @@
                     "value": "jdbc:postgresql://fleet-ms-vehicle-db.cv4mqy2smx4o.eu-central-1.rds.amazonaws.com:5432/vehicle"
                 },
                 {
-                    "name": "CLIENTS_DEVICE_NAME",
-                    "value": "8f659957f2d140898628249adc31f81a.simulation.fms-namespace"
+                    "name": "CLIENTS_DEVICE_URL",
+                    "value": "http://8f659957f2d140898628249adc31f81a.simulation.fms-namespace:8081"
                 },
                 {
-                    "name": "CLIENTS_TELEMATICS_NAME",
-                    "value": "334fd8dfcb6647838579cb7942a9868c.telematics.fms-namespace"
+                    "name": "CLIENTS_TELEMATICS_URL",
+                    "value": "http://334fd8dfcb6647838579cb7942a9868c.telematics.fms-namespace:8082"
                 }
             ],
             "mountPoints": [],

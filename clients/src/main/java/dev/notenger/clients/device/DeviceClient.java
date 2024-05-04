@@ -10,6 +10,7 @@ import java.util.List;
 
 @FeignClient(
         name = "${clients.device.name}",
+        url = "${clients.device.url}",
         path = "api/v1/devices",
         configuration = CustomErrorDecoder.class
 )
