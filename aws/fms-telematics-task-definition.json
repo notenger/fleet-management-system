@@ -1,11 +1,14 @@
 {
-    "family": "FMSTelematics",
+    "family": "fms-telematics",
     "containerDefinitions": [
         {
-            "name": "telematics-service",
-            "image": "notenger/telematics:11.04.2024.12.42.08",
+            "name": "telematics",
+            "image": "919782984342.dkr.ecr.eu-central-1.amazonaws.com/telematics:03.05.2024.13.43.31",
             "cpu": 0,
             "memory": 512,
+            "links": [
+                "mongo"
+            ],
             "portMappings": [
                 {
                     "name": "telematics-8082-tcp",
@@ -15,16 +18,50 @@
                 }
             ],
             "essential": true,
+            "environment": [],
+            "mountPoints": [],
+            "volumesFrom": [],
+            "systemControls": []
+        },
+        {
+            "name": "mongo",
+            "image": "mongo:latest",
+            "cpu": 0,
+            "memory": 512,
+            "portMappings": [
+                {
+                    "name": "mongo-27017-tcp",
+                    "containerPort": 27017,
+                    "hostPort": 27017,
+                    "protocol": "tcp"
+                }
+            ],
+            "essential": true,
+            "environment": [
+                {
+                    "name": "MONGO_INITDB_ROOT_USERNAME",
+                    "value": "notenger"
+                },
+                {
+                    "name": "MONGO_INITDB_ROOT_PASSWORD",
+                    "value": "password"
+                },
+                {
+                    "name": "MONGO_INITDB_DATABASE",
+                    "value": "telematics"
+                }
+            ],
             "mountPoints": [],
             "volumesFrom": [],
             "systemControls": []
         }
     ],
+    "networkMode": "bridge",
     "volumes": [
         {
-            "name": "logs-telematics",
+            "name": "logs-simulation",
             "host": {
-                "sourcePath": "/var/log/containers/telematics"
+                "sourcePath": "/var/log/containers/simulation"
             }
         }
     ],
