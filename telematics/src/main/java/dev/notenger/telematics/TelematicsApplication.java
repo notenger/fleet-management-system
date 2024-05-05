@@ -22,7 +22,7 @@ public class TelematicsApplication {
     @Bean
     CommandLineRunner commandLineRunner(MongoTemplate mongoTemplate) {
         return args -> {
-
+//            mongoTemplate.insert(new Telemetry());
         };
     }
 

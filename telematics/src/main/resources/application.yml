@@ -10,11 +10,15 @@ spring:
     name: telematics
   data:
     mongodb:
-      database: telematics
+      host: localhost
       port: 27017
-  mongodb:
-    embedded:
-      version: 4.0.2
+      authentication-database: admin
+      database: telematics
+      username: notenger
+      password: password
+#  mongodb:
+#    embedded:
+#      version: 4.0.2
   rabbitmq:
     username: notenger
     password: Xweqf!(JYtJuMRGN
@@ -31,12 +35,12 @@ rabbitmq:
   routing-keys:
     internal-telematics: internal.telematics.routing-key
 
-de:
-  flapdoodle:
-    mongodb:
-      embedded:
-        version: 4.0.2
-      databaseDir: ./database
+#de:
+#  flapdoodle:
+#    mongodb:
+#      embedded:
+#        version: 4.0.2
+#      databaseDir: ./database
 
 eureka:
   client:
@@ -44,4 +48,4 @@ eureka:
       defaultZone: http://localhost:8761/eureka
     fetch-registry: true
     register-with-eureka: true
-    enabled: true
+    enabled: false
