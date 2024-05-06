@@ -1,8 +1,6 @@
 package dev.notenger.clients.device;
 
-import dev.notenger.clients.LoadBalancerConfiguration;
 import dev.notenger.clients.config.CustomErrorDecoder;
-import org.springframework.cloud.loadbalancer.annotation.LoadBalancerClient;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +12,6 @@ import java.util.List;
         path = "api/v1/devices",
         configuration = CustomErrorDecoder.class
 )
-//@LoadBalancerClient(name = "simulation", configuration = LoadBalancerConfiguration.class)
 public interface DeviceClient {
 
     @PostMapping

@@ -11,6 +11,7 @@
     "@types/react-dom": "latest",
     "antd": "^5.15.4",
     "axios": "^1.6.2",
+    "jwt-decode": "^3.1.2",
     "leaflet": "^1.9.4",
     "leaflet-rotatedmarker": "^0.2.0",
     "oidc-client-ts": "^3.0.1",

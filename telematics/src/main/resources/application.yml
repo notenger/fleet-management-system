@@ -20,10 +20,7 @@ spring:
 #    embedded:
 #      version: 4.0.2
   rabbitmq:
-    username: notenger
-    password: Xweqf!(JYtJuMRGN
-#    addresses: localhost:5672
-    addresses: amqps://b-315e2490-f1a2-4b07-8ad4-b2ac61986ef2.mq.eu-central-1.amazonaws.com:5671
+    addresses: localhost:5672
   profiles:
     active: default
 
@@ -48,4 +45,4 @@ eureka:
       defaultZone: http://localhost:8761/eureka
     fetch-registry: true
     register-with-eureka: true
-    enabled: false
+    enabled: true

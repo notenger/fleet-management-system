@@ -5,8 +5,8 @@ import java.util.List;
 public record GeolocationDTO(
         Integer deviceId,
         Integer vehicleId,
-        double latitude,
-        double longitude,
-        double heading,
+        Double latitude,
+        Double longitude,
+        Double heading,
         List<List<Double>> pathData) {
 }

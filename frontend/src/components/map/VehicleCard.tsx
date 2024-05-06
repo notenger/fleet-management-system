@@ -18,7 +18,7 @@ export default function VehicleCard({ vehicle, fetchVehicles }) {
   useEffect(() => {
     getDevice(vehicle.deviceId)
       .then((res) => {
-        console.log("getDevice response: " + res);
+        console.log("getDevice response: " + JSON.stringify(res));
         setVehicleSpeed(res.data.averageSpeed);
       })
       .catch((err) => {

@@ -33,8 +33,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: https://cognito-idp.eu-central-1.amazonaws.com/eu-central-1_mRlYi1e69
-#          issuer-uri: http://${keycloak.domain}/realms/${keycloak.realm}
+          issuer-uri: http://${keycloak.domain}/realms/${keycloak.realm}
 
 keycloak:
   realm: spring-boot-code

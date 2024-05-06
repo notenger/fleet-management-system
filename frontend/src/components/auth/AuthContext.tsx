@@ -8,6 +8,7 @@ import React, {
 } from "react";
 import AuthService from "./AuthService";
 import { User } from "oidc-client-ts";
+import jwtDecode, { JwtPayload, JwtHeader } from "jwt-decode";
 
 const AuthContext = createContext(null!);
 
@@ -28,6 +29,24 @@ function AuthProvider({ children }: { children: ReactNode }) {
     const authedUser = await authService.loginCallback();
     console.log("authedUser:", authedUser);
     setUser(authedUser);
+  };
+
+  const isAuthenticated = () => {
+    if (user === undefined) return false;
+    return true;
+  };
+
+  const isTokenExpired = () => {
+    const expiration = JSON.parse(
+      sessionStorage.getItem(
+        `oidc.user:${process.env.REACT_APP_AUTHORITY}:${process.env.REACT_APP_CLIENT_ID}`
+      ) || "null"
+    )?.expires_at;
+
+    if (Date.now() > expiration * 1000) {
+      return true;
+    }
+    return false;
   };
 
   const login = async (): Promise<void> => {
@@ -65,7 +84,15 @@ function AuthProvider({ children }: { children: ReactNode }) {
     setUser(null);
   };
 
-  const value = { user, login, logout, loginCallback, cognitoLogout };
+  const value = {
+    user,
+    login,
+    logout,
+    loginCallback,
+    cognitoLogout,
+    isAuthenticated,
+    isTokenExpired,
+  };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

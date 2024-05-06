@@ -11,7 +11,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("api/v1/places")
-@CrossOrigin
 @Slf4j
 public class PlaceController {
     private final PlaceService placeService;

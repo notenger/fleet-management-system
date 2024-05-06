@@ -1,20 +1,71 @@
 server:
-    port: 8083
+  port: 9090
+
+cors:
+  allowed-origins: "*"
+  allowed-methods: "*"
+  allowed-headers: "*"
+  exposed-headers: "*"
 
 spring:
-    application:
-        name: api-gateway
-    cloud:
-       gateway:
-          routes:
-            - id: customer
-              uri: lb://VEHICLE
-              predicates:
-                - Path=/api/v1/vehicles/**
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_UNIQUE
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedHeaders: "*"
+            allowedMethods: "*"
+      routes:
+        - id: vehicle
+          uri: lb://VEHICLE
+          predicates:
+            - Path=/api/v1/vehicles/**
+        - id: simulation
+          uri: lb://SIMULATION
+          predicates:
+            - Path=/api/v1/places/**, /api/v1/devices/**
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          #          issuer-uri: https://cognito-idp.eu-central-1.amazonaws.com/eu-central-1_mRlYi1e69
+          issuer-uri: http://${keycloak.domain}/realms/${keycloak.realm}
+
+keycloak:
+  realm: spring-boot-code
+  domain: keycloak:9081
+#  adminClientId: admin-cli
+#  adminClientSecret: 3EgmKg4vh9BqYmfPay9l4S3eN2I3ZeTW
+#  client: authenticationClientId
+#  urls:
+#    auth: http://${keycloak.domain}
+
+logging:
+  level:
+    org:
+      springframework:
+        security:
+          web: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+  gateway:
+    enabled: true
 
 eureka:
-    client:
-        service-url:
-            defaultZone: http://eureka-server:8761/eureka
-        fetch-registry: true
-        register-with-eureka: true
+  client:
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka
+      fetch-registry: true
+      register-with-eureka: true

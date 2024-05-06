@@ -3,7 +3,7 @@
     "containerDefinitions": [
         {
             "name": "simulation",
-            "image": "notenger/simulation:11.04.2024.12.42.08",
+            "image": "919782984342.dkr.ecr.eu-central-1.amazonaws.com/simulation:latest",
             "cpu": 0,
             "memory": 512,
             "portMappings": [
@@ -15,6 +15,12 @@
                 }
             ],
             "essential": true,
+            "environment": [
+                {
+                    "name": "SPRING_PROFILES_ACTIVE",
+                    "value": "aws"
+                }
+            ],
             "mountPoints": [],
             "volumesFrom": [],
             "systemControls": []

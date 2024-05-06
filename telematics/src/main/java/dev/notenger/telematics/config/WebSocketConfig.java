@@ -1,4 +1,4 @@
-package dev.notenger.telematics.messaging;
+package dev.notenger.telematics.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;

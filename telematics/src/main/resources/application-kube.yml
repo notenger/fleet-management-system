@@ -1,14 +1,24 @@
 server:
   port: 8082
 
+cors:
+  allowed-origins: "*"
+  allowed-methods: "*"
+
 spring:
+  application:
+    name: telematics
   data:
     mongodb:
-      database: telematics
+      host: localhost
       port: 27017
-  mongodb:
-    embedded:
-      version: 4.0.2
+      authentication-database: admin
+      database: telematics
+      username: notenger
+      password: password
+  #  mongodb:
+  #    embedded:
+  #      version: 4.0.2
   rabbitmq:
     addresses: rabbitmq:5672
 
@@ -16,13 +26,16 @@ rabbitmq:
   exchanges:
     internal: internal.exchange
   queues:
-    notification: notification.queue
+    telematics: telematics.queue
   routing-keys:
-    internal-notification: internal.notification.routing-key
+    internal-telematics: internal.telematics.routing-key
 
-de:
-  flapdoodle:
-    mongodb:
-      embedded:
-        version: 4.0.2
-      databaseDir: ./database
+#de:
+#  flapdoodle:
+#    mongodb:
+#      embedded:
+#        version: 4.0.2
+#      databaseDir: ./database
+
+eureka:
+    enabled: false

@@ -1,7 +1,15 @@
 server:
   port: 8081
+  error:
+    include-message: always
+
+cors:
+  allowed-origins: "*"
+  allowed-methods: "*"
 
 spring:
+  application:
+    name: simulation
   rabbitmq:
     addresses: rabbitmq:5672
 

@@ -1,4 +1,4 @@
-package dev.notenger.telematics;
+package dev.notenger.telematics.config;
 
 import lombok.Getter;
 import org.springframework.amqp.core.Binding;
@@ -37,7 +37,7 @@ public class TelematicsConfig {
     }
 
     @Bean
-    public Binding internalTotelematicsBinding() {
+    public Binding internalToTelematicsBinding() {
         return BindingBuilder
                 .bind(telematicsQueue())
                 .to(internalTopicExchange())

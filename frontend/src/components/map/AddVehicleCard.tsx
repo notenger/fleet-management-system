@@ -6,14 +6,24 @@ import TextField from "@mui/material/TextField";
 import Title from "../muitemplate/Title";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {
-  createVehicle,
-  bindVehicle,
+  addVehicle,
   registerDevice,
   getAvailableDevices,
 } from "../../services/httpClient.js";
 
 export default function AddVehicleCard({ landmark, fetchVehicles }) {
   const [vehicleSpeed, setVehicleSpeed] = useState(160);
+
+  const generateRandomString = (length) => {
+    let result = "";
+    const characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    const charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+  };
 
   const handleLocateVehicleClick = async () => {
     try {
@@ -23,7 +33,7 @@ export default function AddVehicleCard({ landmark, fetchVehicles }) {
 
       if (availableDevices.length === 0) {
         await registerDevice({
-          serialNumber: "0055111999",
+          serialNumber: generateRandomString(10),
           averageSpeed: vehicleSpeed,
         });
 
@@ -34,8 +44,8 @@ export default function AddVehicleCard({ landmark, fetchVehicles }) {
       const randomIndex = Math.floor(Math.random() * availableDevices.length);
       const randomDevice = availableDevices[randomIndex];
 
-      await createVehicle({
-        vin: "5147309378",
+      await addVehicle({
+        vin: generateRandomString(10),
         make: "AAA",
         model: "cc",
         year: 2016,

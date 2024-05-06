@@ -6,10 +6,10 @@ server:
 cors:
   allowed-origins: "*"
   allowed-methods: "*"
-  allowed-headers: "*"
-  exposed-headers: "*"
 
 spring:
+  application:
+    name: vehicle
   datasource:
     url: jdbc:postgresql://postgres:5432/vehicle
     username: notenger
@@ -22,3 +22,6 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format-sql: true
     show-sql: true
+
+eureka:
+  enabled: false

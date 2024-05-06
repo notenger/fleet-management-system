@@ -97,6 +97,6 @@ public class DeviceService {
     }
 
     public DeviceDTO getDevice(Integer id) {
-        return simulationClient.findAllDeviceAgents().stream().map(d -> (Device) d).map(deviceDTOMapper).findAny().orElseThrow();
+        return simulationClient.findAllDeviceAgents().stream().map(d -> (Device) d).map(deviceDTOMapper).findAny().orElseThrow(); // todo
     }
 }

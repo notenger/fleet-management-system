@@ -12,12 +12,11 @@ const getAuthConfig = () => ({
   },
 });
 
-export const httpClient = axios.create({});
-
 export const getPlaces = async () => {
   try {
     return await axios.get(
-      `${process.env.REACT_APP_PLACE_API_BASE_URL}/api/v1/places`
+      `${process.env.REACT_APP_API_GATEWAY_URL}/api/v1/places`,
+      getAuthConfig()
     );
   } catch (e) {
     throw e;
@@ -27,7 +26,7 @@ export const getPlaces = async () => {
 export const getVehicles = async () => {
   try {
     return await axios.get(
-      `${process.env.REACT_APP_VEHICLE_API_BASE_URL}/api/v1/vehicles`,
+      `${process.env.REACT_APP_API_GATEWAY_URL}/api/v1/vehicles`,
       getAuthConfig()
     );
   } catch (e) {
@@ -38,7 +37,7 @@ export const getVehicles = async () => {
 export const getAvailableDevices = async () => {
   try {
     return await axios.get(
-      `${process.env.REACT_APP_DEVICE_API_BASE_URL}/api/v1/devices/available`,
+      `${process.env.REACT_APP_API_GATEWAY_URL}/api/v1/devices/available`,
       getAuthConfig()
     );
   } catch (e) {
@@ -49,26 +48,20 @@ export const getAvailableDevices = async () => {
 export const getDevice = async (id) => {
   try {
     return await axios.get(
-      `${process.env.REACT_APP_DEVICE_API_BASE_URL}/api/v1/devices/${id}`
+      `${process.env.REACT_APP_API_GATEWAY_URL}/api/v1/devices/${id}`,
+      getAuthConfig()
     );
   } catch (e) {
     throw e;
   }
 };
 
-export const registerUser = async (user) => {
-  try {
-    return await axios.post(`http://localhost:9090/api/v1/users`, user);
-  } catch (e) {
-    throw e;
-  }
-};
-
-export const createVehicle = async (vehicle) => {
+export const addVehicle = async (vehicle) => {
   try {
     return await axios.post(
-      `${process.env.REACT_APP_VEHICLE_API_BASE_URL}/api/v1/vehicles`,
-      vehicle
+      `${process.env.REACT_APP_API_GATEWAY_URL}/api/v1/vehicles`,
+      vehicle,
+      getAuthConfig()
     );
   } catch (e) {
     throw e;
@@ -78,8 +71,9 @@ export const createVehicle = async (vehicle) => {
 export const registerDevice = async (device) => {
   try {
     return await axios.post(
-      `${process.env.REACT_APP_DEVICE_API_BASE_URL}/api/v1/devices`,
-      device
+      `${process.env.REACT_APP_API_GATEWAY_URL}/api/v1/devices`,
+      device,
+      getAuthConfig()
     );
   } catch (e) {
     throw e;
@@ -89,18 +83,9 @@ export const registerDevice = async (device) => {
 export const updateVehicle = async (id, update) => {
   try {
     return await axios.put(
-      `${process.env.REACT_APP_VEHICLE_API_BASE_URL}/api/v1/vehicles/${id}`,
-      update
-    );
-  } catch (e) {
-    throw e;
-  }
-};
-
-export const bindVehicle = async (id) => {
-  try {
-    return await axios.put(
-      `${process.env.REACT_APP_VEHICLE_API_BASE_URL}/api/v1/vehicles/bind/${id}`
+      `${process.env.REACT_APP_API_GATEWAY_URL}/api/v1/vehicles/${id}`,
+      update,
+      getAuthConfig()
     );
   } catch (e) {
     throw e;
@@ -110,8 +95,9 @@ export const bindVehicle = async (id) => {
 export const updateDevice = async (id, update) => {
   try {
     return await axios.put(
-      `${process.env.REACT_APP_DEVICE_API_BASE_URL}/api/v1/devices/${id}`,
-      update
+      `${process.env.REACT_APP_API_GATEWAY_URL}/api/v1/devices/${id}`,
+      update,
+      getAuthConfig()
     );
   } catch (e) {
     throw e;
@@ -121,7 +107,8 @@ export const updateDevice = async (id, update) => {
 export const deleteVehicle = async (id) => {
   try {
     return await axios.delete(
-      `${process.env.REACT_APP_VEHICLE_API_BASE_URL}/api/v1/vehicles/${id}`
+      `${process.env.REACT_APP_API_GATEWAY_URL}/api/v1/vehicles/${id}`,
+      getAuthConfig()
     );
   } catch (e) {
     throw e;
@@ -131,18 +118,8 @@ export const deleteVehicle = async (id) => {
 export const deleteDevice = async (id) => {
   try {
     return await axios.delete(
-      `${process.env.REACT_APP_DEVICE_API_BASE_URL}/api/v1/devices/${id}`
-    );
-  } catch (e) {
-    throw e;
-  }
-};
-
-export const login = async (usernameAndPassword) => {
-  try {
-    return await axios.post(
-      `${import.meta.env.VITE_API_BASE_URL}/api/v1/auth/login`,
-      usernameAndPassword
+      `${process.env.REACT_APP_API_GATEWAY_URL}/api/v1/devices/${id}`,
+      getAuthConfig()
     );
   } catch (e) {
     throw e;

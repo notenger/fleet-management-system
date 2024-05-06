@@ -1,4 +1,4 @@
-name: CD - Deploy Vehicle Service
+name: CD - Deploy Vehicle Service To ECS
 
 on:
   workflow_dispatch:
@@ -7,6 +7,15 @@ on:
       - main
     paths:
       - vehicle/**
+
+env:
+  AWS_REGION: eu-central-1
+  ECS_CLUSTER: FmsCluster
+
+  ECR_REPOSITORY: vehicle
+  ECS_SERVICE: vehicle
+  ECS_TASK_DEFINITION: aws/fms-vehicle-task-definition.json
+  CONTAINER_NAME: vehicle-service
 
 jobs:
   deploy:
@@ -28,47 +37,57 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@0e613a0980cbf65ed5b322eb7a1e075d28913a83
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
       - uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '18'
           cache: 'maven'
-      - name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
+
       - name: Set build number
         id: build-number
         run: echo "BUILD_NUMBER=$(date '+%d.%m.%Y.%H.%M.%S')" >> $GITHUB_OUTPUT
-      - name: Build Package Push with Maven
-        run: mvn -ntp -B verify -pl vehicle -am -D docker.image.tag=${{steps.build-number.outputs.BUILD_NUMBER}} jib:build
-      - name: Update aws/docker-compose.yml api image tag with new build number
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@62f4f872db3836360b72999f4b87f1ff13310f3a
+
+      - name: Build, tag, and push image to Amazon ECR
+        id: build-image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ steps.build-number.outputs.BUILD_NUMBER }}
         run: |
-          echo "aws/docker-compose.yml before updating tag"
-          cat ./aws/docker-compose.yml
-          sed -i -E 's_(notenger/vehicle:)([^"]*)_\1'${{steps.build-number.outputs.BUILD_NUMBER}}'_' ./aws/docker-compose.yml
-          echo "aws/docker-compose.yml after updating tag"
-          cat ./aws/docker-compose.yml
-      - name: Generate deployment package
-        run: |
-          cd aws
-          zip -r deploy.zip .
-      - name: Deploy to Elastic Beanstalk
-        uses: einaregilsson/beanstalk-deploy@v21
+          echo $ECR_REGISTRY
+          echo $ECR_REPOSITORY
+          echo $IMAGE_TAG
+
+          mvn -ntp -B verify -pl vehicle -am \
+            -Ddocker.image.registry=$ECR_REGISTRY \
+            -Ddocker.image.repository=$ECR_REPOSITORY \
+            -Ddocker.image.tag=$IMAGE_TAG \
+            jib:build
+          echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+
+      - name: Fill in the new image ID in the Amazon ECS task definition
+        id: task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@c804dfbdd57f713b6c079302a4c01db7017a36fc
         with:
-          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          application_name: ${{ secrets.EB_APPLICATION_NAME }}
-          environment_name: ${{ secrets.EB_ENVIRONMENT_NAME }}
-          version_label: ${{ steps.build-number.outputs.BUILD_NUMBER }}
-          version_description: ${{ github.SHA }}
-          region: ${{ secrets.EB_REGION }}
-          deployment_package: aws/deploy.zip
-      - name: Commit and push aws/docker-compose.yml
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git add aws/docker-compose.yml
-          git commit -m "updated aws/docker-compose.yml docker image with new tag ${{ steps.build-number.outputs.BUILD_NUMBER }}"
-          git push
+          task-definition: ${{ env.ECS_TASK_DEFINITION }}
+          container-name: ${{ env.CONTAINER_NAME }}
+          image: ${{ steps.build-image.outputs.image }}
+
+      - name: Deploy Amazon ECS task definition
+        uses: aws-actions/amazon-ecs-deploy-task-definition@df9643053eda01f169e64a0e60233aacca83799a
+        with:
+          task-definition: ${{ steps.task-def.outputs.task-definition }}
+          service: ${{ env.ECS_SERVICE }}
+          cluster: ${{ env.ECS_CLUSTER }}
+          wait-for-service-stability: true

@@ -5,7 +5,7 @@
             "name": "telematics",
             "image": "919782984342.dkr.ecr.eu-central-1.amazonaws.com/telematics:03.05.2024.13.43.31",
             "cpu": 0,
-            "memory": 512,
+            "memory": 666,
             "links": [
                 "mongo"
             ],
@@ -18,7 +18,12 @@
                 }
             ],
             "essential": true,
-            "environment": [],
+            "environment": [
+                {
+                    "name": "SPRING_PROFILES_ACTIVE",
+                    "value": "aws"
+                }
+            ],
             "mountPoints": [],
             "volumesFrom": [],
             "systemControls": []
@@ -27,7 +32,7 @@
             "name": "mongo",
             "image": "mongo:latest",
             "cpu": 0,
-            "memory": 512,
+            "memory": 262,
             "portMappings": [
                 {
                     "name": "mongo-27017-tcp",
@@ -59,9 +64,9 @@
     "networkMode": "bridge",
     "volumes": [
         {
-            "name": "logs-simulation",
+            "name": "logs-telematics",
             "host": {
-                "sourcePath": "/var/log/containers/simulation"
+                "sourcePath": "/var/log/containers/telematics"
             }
         }
     ],

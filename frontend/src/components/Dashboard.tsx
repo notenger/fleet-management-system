@@ -31,7 +31,7 @@ export default function Dashboard() {
   });
 
   const SOCKET_URL =
-    "https://fmvs.eu-central-1.elasticbeanstalk.com/telematics/ws-message";
+    "http://ec2-18-157-169-94.eu-central-1.compute.amazonaws.com:8082/ws-message";
   let onConnected = () => {
     console.log("Connected!!");
   };

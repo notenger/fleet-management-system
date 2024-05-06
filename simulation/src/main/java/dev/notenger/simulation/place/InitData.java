@@ -1,4 +1,4 @@
-package dev.notenger.simulation;
+package dev.notenger.simulation.place;
 
 import com.notenger.model.SimulationMessage;
 import dev.notenger.amqp.RabbitMQMessageProducer;
@@ -16,18 +16,13 @@ import java.util.List;
 public class InitData implements CommandLineRunner {
 
     private final PlaceService placeService;
-    private final DeviceService deviceService;
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         placeService.addPlace("Paris", 48.856663, 2.351556);
         placeService.addPlace("Prague", 50.080345, 14.428974);
         placeService.addPlace("Rome", 41.887064, 12.504809);
         placeService.addPlace("Tallinn", 59.437425, 24.745137);
         placeService.addPlace("Berlin", 52.516259, 13.377217);
-
-//        deviceService.registerDevice("C", 120);
-//        deviceService.registerDevice("J", 100);
-
     }
 }

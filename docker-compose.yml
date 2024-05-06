@@ -13,6 +13,7 @@ services:
     networks:
       - postgres
     restart: unless-stopped
+
   mongo:
     container_name: mongo
     image: mongo:latest
@@ -25,6 +26,7 @@ services:
       - "27017:27017"
     networks:
       - mongo
+
   rabbitmq:
     image: rabbitmq:3.9.11-management-alpine
     container_name: rabbitmq
@@ -33,10 +35,9 @@ services:
       - "15672:15672"
       - "15671:15671"
       - "61613:61613"
-#    volumes:
-#      - "./rabbit_enabled_plugins:/etc/rabbitmq/enabled_plugins"
     networks:
       - spring
+
   eureka-server:
     image: notenger/eureka-server:latest
     container_name: eureka-server
@@ -46,6 +47,7 @@ services:
       - SPRING_PROFILES_ACTIVE=docker
     networks:
       - spring
+
   apigw:
     image: notenger/apigw:latest
     container_name: apigw
@@ -57,6 +59,7 @@ services:
       - spring
     depends_on:
       - eureka-server
+
   keycloak:
     image: quay.io/keycloak/keycloak:22.0.4
     command:
@@ -70,9 +73,10 @@ services:
       KEYCLOAK_ADMIN_PASSWORD: admin
     volumes:
       - ./keycloak-config/:/opt/keycloak/data/import/
+
   vehicle:
     image: notenger/vehicle:latest
-    container_name: vehicle-01
+    container_name: vehicle
     ports:
       - "8080:8080"
     environment:
@@ -85,7 +89,7 @@ services:
 
   simulation:
     image: notenger/simulation:latest
-    container_name: simulation-01
+    container_name: simulation
     ports:
       - "8081:8081"
     environment:

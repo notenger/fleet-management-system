@@ -19,7 +19,7 @@ public class WebSecurityConfig {
 		httpSecurity
 				.csrf().disable()
 				.authorizeExchange()
-				.pathMatchers("/**").permitAll()
+				.pathMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 				.anyExchange().authenticated()
 				.and()
 				.securityContextRepository(NoOpServerSecurityContextRepository.getInstance())
