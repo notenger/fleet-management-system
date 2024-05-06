@@ -15,7 +15,7 @@ env:
   ECR_REPOSITORY: vehicle
   ECS_SERVICE: vehicle
   ECS_TASK_DEFINITION: aws/fms-vehicle-task-definition.json
-  CONTAINER_NAME: vehicle-service
+  CONTAINER_NAME: vehicle
 
 jobs:
   deploy:
