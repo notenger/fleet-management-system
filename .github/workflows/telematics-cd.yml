@@ -2,11 +2,11 @@ name: CD - Deploy Telematics Service To ECS
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-    paths:
-      - telematics/**
+#  push:
+#    branches:
+#      - main
+#    paths:
+#      - telematics/**
 
 env:
   AWS_REGION: eu-central-1

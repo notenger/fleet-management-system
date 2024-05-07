@@ -2,11 +2,11 @@ name: CD - Deploy Simulation Service To ECS
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-    paths:
-      - simulation/**
+#  push:
+#    branches:
+#      - main
+#    paths:
+#      - simulation/**
 
 env:
   AWS_REGION: eu-central-1

@@ -30,8 +30,7 @@ export default function Dashboard() {
     // averageFuelGauge: 0.03,
   });
 
-  const SOCKET_URL =
-    "http://fmsecsloadbalancer-619951464.eu-central-1.elb.amazonaws.com:8082/ws-message";
+  const SOCKET_URL = `${process.env.REACT_APP_API_GATEWAY_URL}/websocket`;
   let onConnected = () => {
     console.log("Connected!!");
   };

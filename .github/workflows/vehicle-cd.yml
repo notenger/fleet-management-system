@@ -2,11 +2,11 @@ name: CD - Deploy Vehicle Service To ECS
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-    paths:
-      - vehicle/**
+#  push:
+#    branches:
+#      - main
+#    paths:
+#      - vehicle/**
 
 env:
   AWS_REGION: eu-central-1

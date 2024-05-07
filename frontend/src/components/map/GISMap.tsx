@@ -15,13 +15,7 @@ import VehicleCard from "./VehicleCard";
 import RotatedMarker from "./RotatedMarker";
 import marker from "../../assets/truck3.png";
 import { Icon } from "leaflet";
-import {
-  saveVehicle,
-  updateVehicle,
-  getVehicles,
-  getPlaces,
-  deleteVehicle,
-} from "../../services/httpClient.js";
+import { getVehicles, getPlaces } from "../../services/httpClient.js";
 import SockJsClient from "react-stomp";
 import L from "leaflet";
 import "leaflet-rotatedmarker";
@@ -45,8 +39,8 @@ const landmarkIcon = new Icon({
   iconSize: [38, 38],
 });
 
-const SOCKET_URL =
-  "http://fmsecsloadbalancer-619951464.eu-central-1.elb.amazonaws.com:8082/ws-message";
+const SOCKET_URL = `${process.env.REACT_APP_API_GATEWAY_URL}/websocket`;
+
 let onConnected = () => {
   console.log("Connected!!");
 };
@@ -73,7 +67,7 @@ export default function GISMap() {
         console.log(res);
       })
       .catch((err) => {
-        console.log("Error trying fetch vehicles", JSON.stringify(err));
+        // console.log("Error trying fetch vehicles", JSON.stringify(err));
       })
       .finally(() => {});
   };
@@ -204,7 +198,7 @@ export default function GISMap() {
         onConnect={onConnected}
         onDisconnect={console.log("Disconnected!")}
         onMessage={(msg) => onMessageReceived(msg)}
-        debug={false}
+        debug={true}
       />
     </>
   );
