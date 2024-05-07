@@ -16,4 +16,5 @@ spring:
     addresses: amqps://b-315e2490-f1a2-4b07-8ad4-b2ac61986ef2.mq.eu-central-1.amazonaws.com:5671
 
 eureka:
+  client:
     enabled: false

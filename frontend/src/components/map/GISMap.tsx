@@ -47,7 +47,8 @@ const landmarkIcon = new Icon({
 
 // const SOCKET_URL =
 //   "https://fmvs.eu-central-1.elasticbeanstalk.com/telematics/ws-message";
-const SOCKET_URL = "http://localhost:8082/ws-message";
+const SOCKET_URL =
+  "http://fmsecsloadbalancer-619951464.eu-central-1.elb.amazonaws.com:8082/ws-message";
 let onConnected = () => {
   console.log("Connected!!");
 };

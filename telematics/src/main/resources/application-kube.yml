@@ -10,7 +10,7 @@ spring:
     name: telematics
   data:
     mongodb:
-      host: localhost
+      host: mongo
       port: 27017
       authentication-database: admin
       database: telematics
@@ -38,4 +38,5 @@ rabbitmq:
 #      databaseDir: ./database
 
 eureka:
+  client:
     enabled: false

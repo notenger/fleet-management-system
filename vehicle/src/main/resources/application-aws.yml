@@ -24,4 +24,5 @@ spring:
     show-sql: true
 
 eureka:
-  enabled: false
+  client:
+    enabled: false
