@@ -22,11 +22,11 @@
                 },
                 {
                     "name": "CLIENTS_DEVICE_URL",
-                    "value": "http://25f696700477453b9b643c9eaa94f7b9.simulation.fms-namespace:8081"
+                    "value": "http://172.31.23.43:8081"
                 },
                 {
                     "name": "CLIENTS_TELEMATICS_URL",
-                    "value": "http://334fd8dfcb6647838579cb7942a9868c.telematics.fms-namespace:8082"
+                    "value": "http://172.31.16.254:8082"
                 }
             ],
             "mountPoints": [],
