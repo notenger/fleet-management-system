@@ -15,7 +15,7 @@ const getAuthConfig = () => ({
 export const getPlaces = async () => {
   try {
     return await axios.get(
-      `${process.env.REACT_APP_API_GATEWAY_URL}/api/v1/places`,
+      `${process.env.REACT_APP_PLACE_BASE_URL}/api/v1/places`,
       getAuthConfig()
     );
   } catch (e) {
@@ -26,7 +26,7 @@ export const getPlaces = async () => {
 export const getVehicles = async () => {
   try {
     return await axios.get(
-      `${process.env.REACT_APP_API_GATEWAY_URL}/api/v1/vehicles`,
+      `${process.env.REACT_APP_VEHICLE_BASE_URL}/api/v1/vehicles`,
       getAuthConfig()
     );
   } catch (e) {
@@ -37,7 +37,7 @@ export const getVehicles = async () => {
 export const getAvailableDevices = async () => {
   try {
     return await axios.get(
-      `${process.env.REACT_APP_API_GATEWAY_URL}/api/v1/devices/available`,
+      `${process.env.REACT_APP_DEVICE_BASE_URL}/api/v1/devices/available`,
       getAuthConfig()
     );
   } catch (e) {
@@ -48,7 +48,7 @@ export const getAvailableDevices = async () => {
 export const getDevice = async (id) => {
   try {
     return await axios.get(
-      `${process.env.REACT_APP_API_GATEWAY_URL}/api/v1/devices/${id}`,
+      `${process.env.REACT_APP_DEVICE_BASE_URL}/api/v1/devices/${id}`,
       getAuthConfig()
     );
   } catch (e) {
@@ -59,7 +59,7 @@ export const getDevice = async (id) => {
 export const addVehicle = async (vehicle) => {
   try {
     return await axios.post(
-      `${process.env.REACT_APP_API_GATEWAY_URL}/api/v1/vehicles`,
+      `${process.env.REACT_APP_VEHICLE_BASE_URL}/api/v1/vehicles`,
       vehicle,
       getAuthConfig()
     );
@@ -71,7 +71,7 @@ export const addVehicle = async (vehicle) => {
 export const registerDevice = async (device) => {
   try {
     return await axios.post(
-      `${process.env.REACT_APP_API_GATEWAY_URL}/api/v1/devices`,
+      `${process.env.REACT_APP_DEVICE_BASE_URL}/api/v1/devices`,
       device,
       getAuthConfig()
     );
@@ -83,7 +83,7 @@ export const registerDevice = async (device) => {
 export const updateVehicle = async (id, update) => {
   try {
     return await axios.put(
-      `${process.env.REACT_APP_API_GATEWAY_URL}/api/v1/vehicles/${id}`,
+      `${process.env.REACT_APP_VEHICLE_BASE_URL}/api/v1/vehicles/${id}`,
       update,
       getAuthConfig()
     );
@@ -95,7 +95,7 @@ export const updateVehicle = async (id, update) => {
 export const updateDevice = async (id, update) => {
   try {
     return await axios.put(
-      `${process.env.REACT_APP_API_GATEWAY_URL}/api/v1/devices/${id}`,
+      `${process.env.REACT_APP_DEVICE_BASE_URL}/api/v1/devices/${id}`,
       update,
       getAuthConfig()
     );
@@ -107,7 +107,7 @@ export const updateDevice = async (id, update) => {
 export const deleteVehicle = async (id) => {
   try {
     return await axios.delete(
-      `${process.env.REACT_APP_API_GATEWAY_URL}/api/v1/vehicles/${id}`,
+      `${process.env.REACT_APP_VEHICLE_BASE_URL}/api/v1/vehicles/${id}`,
       getAuthConfig()
     );
   } catch (e) {
@@ -118,7 +118,7 @@ export const deleteVehicle = async (id) => {
 export const deleteDevice = async (id) => {
   try {
     return await axios.delete(
-      `${process.env.REACT_APP_API_GATEWAY_URL}/api/v1/devices/${id}`,
+      `${process.env.REACT_APP_DEVICE_BASE_URL}/api/v1/devices/${id}`,
       getAuthConfig()
     );
   } catch (e) {
