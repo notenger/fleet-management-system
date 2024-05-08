@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @Slf4j
+@CrossOrigin
 @RequestMapping(path = "api/v1/vehicles")
 @RequiredArgsConstructor
 public class VehicleController {

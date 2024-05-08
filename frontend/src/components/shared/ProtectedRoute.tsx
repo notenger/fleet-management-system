@@ -8,7 +8,7 @@ export default function ProtectedRoute({ children }) {
 
   useEffect(() => {
     // if (auth.user === undefined) auth.login();
-    if (auth.isTokenExpired()) navigate("/logout");
+    // if (auth.isTokenExpired()) navigate("/logout");
     if (!auth.isAuthenticated()) auth.login();
   });
 

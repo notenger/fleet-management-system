@@ -4,10 +4,10 @@ server:
     include-message: always
 
 cors:
-  allowed-origins: "*"
-  allowed-methods: "*"
-  allowed-headers: "*"
-  exposed-headers: "*"
+  allowed-origins: "http://localhost:3000/map"
+  allowed-methods: "GET,POST,HEAD,OPTIONS,PUT"
+  allowed-headers: "Content-Type,X-Requested-With,accept,Origin,Access-Control-Request-Method,Access-Control-Request-Headers"
+  exposed-headers: "Access-Control-Allow-Origin,Access-Control-Allow-Credentials"
 
 spring:
   application:

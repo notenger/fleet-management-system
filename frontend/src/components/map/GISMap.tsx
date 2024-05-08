@@ -67,7 +67,7 @@ export default function GISMap() {
         console.log(res);
       })
       .catch((err) => {
-        // console.log("Error trying fetch vehicles", JSON.stringify(err));
+        console.log("Error trying fetch vehicles", JSON.stringify(err));
       })
       .finally(() => {});
   };
@@ -75,7 +75,6 @@ export default function GISMap() {
   useEffect(() => {
     fetchLocations();
     fetchVehicles();
-    console.log(vehicles);
   }, []);
 
   const handleGeolocationMessage = (message) => {
