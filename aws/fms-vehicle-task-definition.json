@@ -30,7 +30,7 @@
                 },
                 {
                     "name": "SPRING_DATASOURCE_PASSWORD",
-                    "value": "from secrets"
+                    "value": "value"
                 }
             ],
             "mountPoints": [],
