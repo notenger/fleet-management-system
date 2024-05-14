@@ -9,9 +9,6 @@ on:
 #      - telematics/**
 
 env:
-  AWS_REGION: eu-central-1
-  ECS_CLUSTER: FmsCluster
-
   ECR_REPOSITORY: telematics
   ECS_SERVICE: telematics
   ECS_TASK_DEFINITION: aws/fms-telematics-task-definition.json
@@ -29,7 +26,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ env.AWS_REGION }}
+          aws-region: ${{ secrets.AWS_REGION }}
 
       - uses: actions/setup-java@v3
         with:
@@ -75,5 +72,5 @@ jobs:
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
           service: ${{ env.ECS_SERVICE }}
-          cluster: ${{ env.ECS_CLUSTER }}
+          cluster: ${{ secrets.ECS_CLUSTER }}
           wait-for-service-stability: true

@@ -1,13 +1,17 @@
 package dev.notenger.vehicle.journey;
 
 import com.github.javafaker.Faker;
+import dev.notenger.clients.device.AttachDeviceRequest;
+import dev.notenger.clients.device.DeviceClient;
 import dev.notenger.clients.vehicle.AddVehicleRequest;
 import dev.notenger.clients.vehicle.UpdateVehicleRequest;
 import dev.notenger.vehicle.entity.Vehicle;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
@@ -17,6 +21,7 @@ import java.util.List;
 import java.util.Random;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 @SpringBootTest(webEnvironment = RANDOM_PORT)
@@ -25,12 +30,17 @@ public class VehicleIT {
 
     @Autowired
     private WebTestClient webTestClient;
+    @MockBean
+    private DeviceClient deviceClient;
     private static final Random RANDOM = new Random();
     protected static final Faker FAKER = new Faker();
     private static final String VEHICLE_PATH = "/api/v1/vehicles";
 
     @Test
     void canCreateVehicle() {
+        // given
+        doNothing().when(deviceClient).attachDevice(anyInt(), any(AttachDeviceRequest.class));
+
         // create registration request
         String fakeVIN = FAKER.bothify("1##?#??######");
         String fakeMake = FAKER.company().name();

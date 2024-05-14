@@ -10,7 +10,7 @@ import {
   CartesianGrid,
   Tooltip,
 } from "recharts";
-import Title from "../muitemplate/Title";
+import Title from "../shared/Title";
 
 function createData(time: string, value?: number) {
   return { time, value };
@@ -20,12 +20,7 @@ let observaionsCounter = 0;
 
 export default function OdometerChart({ value }) {
   const DATA_POINTS_COUNT = 50;
-  const [data, setData] = React.useState([
-    { time: 0, value: 10 },
-    { time: 1, value: 13 },
-    { time: 2, value: 15 },
-    { time: 3, value: 20 },
-  ]);
+  const [data, setData] = React.useState([]);
 
   React.useEffect(() => {
     data.push(createData(observaionsCounter++, value));
@@ -61,6 +56,7 @@ export default function OdometerChart({ value }) {
             style={theme.typography.body2}
             type="number"
             domain={["dataMin", "auto"]}
+            tickFormatter={(number) => Math.floor(number)}
           >
             <Label
               angle={270}
@@ -75,6 +71,7 @@ export default function OdometerChart({ value }) {
             </Label>
           </YAxis>
           <Tooltip
+            formatter={(number) => Math.ceil(number * 100) / 100}
             labelFormatter={(value) => {
               return "";
             }}

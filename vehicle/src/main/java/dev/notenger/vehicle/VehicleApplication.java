@@ -26,27 +26,4 @@ public class VehicleApplication {
     public static void main(String[] args) {
         SpringApplication.run(VehicleApplication.class, args);
     }
-
-    @Bean
-    CommandLineRunner commandLineRunner(VehicleRepository repository) {
-
-        return args -> {
-            if (true) return;
-
-            Vehicle bentley = Vehicle
-                    .builder()
-                    .year(2020)
-                    .model("rolls-royce")
-                    .build();
-            Vehicle amg = Vehicle
-                    .builder()
-                    .year(2021)
-                    .model("amg")
-                    .build();
-
-            repository.saveAll(
-                    List.of(bentley, amg)
-            );
-        };
-    };
 }

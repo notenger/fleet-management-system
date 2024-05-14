@@ -4,11 +4,15 @@ import com.anylogic.engine.IPathData;
 import com.anylogic.engine.Point;
 import com.anylogic.engine.markup.Curve;
 import com.anylogic.engine.markup.GISCurve;
+import com.anylogic.engine.markup.GISPoint;
 import com.notenger.model.DeviceAgent;
+import com.notenger.model.GISPlace;
 import com.notenger.model.SimulationMessage;
+import dev.notenger.simulation.place.Place;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
+import java.security.GuardedObject;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Map;
@@ -34,10 +38,12 @@ public class Device extends DeviceAgent {
     private double fuelGauge;
     private double speedometer;
     private Point lastLocation;
+    private GISPlace lastVisitedPlace;
 
     private static final double BASE_CONSUMPTION_RATE = 0.06;
     private static final double SPEED_LIMIT = 90;
     private static final double RANDOM_FACTOR = 0.1;
+    private static final double HUNDRED_KPH = 100;
 
     private static final Random random = new Random();
 
@@ -54,14 +60,14 @@ public class Device extends DeviceAgent {
                     speedometer,
                     odometer,
                     fuelGauge,
-                    time());
+                    LocalDateTime.now());
         sendMessage(message);
     }
 
     public void updateGauges() {
         Point currentLocation = new Point().setLatLon(getLatitude(), getLongitude());
-        double distanceTraveled = calculateDistance(lastLocation, currentLocation); // KM
-        double actualSpeed = getSpeed(KPH);
+        double distanceTraveled = calculateDistance(lastLocation, currentLocation);
+        double actualSpeed = getSpeed(KPH) / HUNDRED_KPH;
 
         updateOdometer(distanceTraveled);
         updateFuelGauge(distanceTraveled, actualSpeed);
@@ -107,7 +113,7 @@ public class Device extends DeviceAgent {
 
     public void changeSpeed() {
         double randomFactor = (random.nextDouble() - 0.5) * 2 * RANDOM_FACTOR;
-        double speed = averageSpeed * (1 + randomFactor);
+        double speed = averageSpeed * (1 + randomFactor) * HUNDRED_KPH;
         setSpeed(speed, KPH);
     }
 

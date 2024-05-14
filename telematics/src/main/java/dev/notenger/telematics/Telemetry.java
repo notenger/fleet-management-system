@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Document("telemetry")
@@ -15,12 +17,12 @@ public class Telemetry {
     private String id;
     private Integer deviceId;
     private Integer vehicleId;
-    private double latitude;
-    private double longitude;
-    private double heading;
+    private Double latitude;
+    private Double longitude;
+    private Double heading;
     private List<List<Double>> pathData;
-    private double speedometer;
-    private double odometer;
-    private double fuelGauge;
-    private double timestamp;
+    private Double speedometer;
+    private Double odometer;
+    private Double fuelGauge;
+    private LocalDateTime timestamp;
 }

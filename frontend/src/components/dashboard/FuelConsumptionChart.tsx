@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import { useTheme } from "@mui/material/styles";
 import {
   LineChart,
@@ -10,24 +10,19 @@ import {
   CartesianGrid,
   Tooltip,
 } from "recharts";
-import Title from "../muitemplate/Title";
+import Title from "../shared/Title";
 
 function createData(time: string, value?: number) {
   return { time, value };
 }
 
 let observaionsCounter = 0;
+const DATA_POINTS_COUNT = 50;
 
-export default function FuelConsumptionChart({ value }) {
-  const DATA_POINTS_COUNT = 50;
-  const [data, setData] = React.useState([
-    { time: 0, value: 10 },
-    { time: 1, value: 13 },
-    { time: 2, value: 15 },
-    { time: 3, value: 20 },
-  ]);
+function FuelConsumptionChart({ value }) {
+  const [data, setData] = useState([]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     data.push(createData(observaionsCounter++, value));
     setData(data);
     if (data.length > DATA_POINTS_COUNT) {
@@ -38,7 +33,7 @@ export default function FuelConsumptionChart({ value }) {
   const theme = useTheme();
 
   return (
-    <React.Fragment>
+    <>
       <Title>Average Fuel Consumption</Title>
       <ResponsiveContainer key={`rc_${data.length}`}>
         <LineChart
@@ -59,6 +54,7 @@ export default function FuelConsumptionChart({ value }) {
           <YAxis
             stroke={theme.palette.text.secondary}
             style={theme.typography.body2}
+            tickFormatter={(number) => Math.floor(number)}
             type="number"
             domain={["dataMin", "auto"]}
           >
@@ -75,6 +71,7 @@ export default function FuelConsumptionChart({ value }) {
             </Label>
           </YAxis>
           <Tooltip
+            formatter={(number) => Math.ceil(number * 100) / 100}
             labelFormatter={(value) => {
               return "";
             }}
@@ -89,6 +86,8 @@ export default function FuelConsumptionChart({ value }) {
           />
         </LineChart>
       </ResponsiveContainer>
-    </React.Fragment>
+    </>
   );
 }
+
+export default FuelConsumptionChart;

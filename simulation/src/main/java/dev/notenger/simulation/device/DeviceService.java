@@ -36,12 +36,13 @@ public class DeviceService {
     public void attachDevice(Integer deviceId, String placeName) {
         Place place = placeService.getPlaceByName(placeName);
         Device device = (Device) simulationClient.findDeviceAgentById(deviceId)
-                .orElseThrow(() -> new VehicleNotFoundException(
+                .orElseThrow(() -> new DeviceNotFoundException(
                     "device with id [%s] not found".formatted(deviceId)
                 ));
         device.reset();
         device.noteUnavailable();
         device.setLastLocation(getRandomNearPoint(place.getLatitude(), place.getLongitude()));
+        device.setLastVisitedPlace(place);
         device.activate();
     }
 
@@ -66,9 +67,9 @@ public class DeviceService {
         return originalPoint.add(offset);
     }
 
-    public void deregisterDevice(Integer id) {
-        checkIfDeviceExistsOrThrow(id);
-        simulationClient.removeDeviceAgentById(id);
+    public void deregisterDevice(Integer deviceId) {
+        checkIfDeviceExistsOrThrow(deviceId);
+        simulationClient.removeDeviceAgentById(deviceId);
     }
 
     private void checkIfDeviceExistsOrThrow(Integer deviceId) {
@@ -79,24 +80,36 @@ public class DeviceService {
         }
     }
 
-    public void updateDevice(Integer id, Double averageSpeed) {
-        Device device = (Device) simulationClient.findDeviceAgentById(id).orElseThrow();
+    public void updateDevice(Integer deviceId, Double averageSpeed) {
+        Device device = (Device) simulationClient.findDeviceAgentById(deviceId)
+                                        .orElseThrow(() -> new DeviceNotFoundException(
+                                            "device with id [%s] not found".formatted(deviceId)
+                                        ));
         device.setAverageSpeed(averageSpeed);
     }
 
     public List<DeviceDTO> getAllAvailableDevices() {
-        return simulationClient.findAllAvailableDeviceAgents().stream().map(d -> (Device) d)
-                .map(deviceDTOMapper)
-                .toList();
+        return simulationClient.findAllAvailableDeviceAgents()
+                                    .stream()
+                                    .map(d -> (Device) d)
+                                    .map(deviceDTOMapper)
+                                    .toList();
     }
 
     public List<DeviceDTO> getAllDevices() {
-        return simulationClient.findAllDeviceAgents().stream().map(d -> (Device) d)
-                .map(deviceDTOMapper)
-                .toList();
+        return simulationClient.findAllDeviceAgents()
+                                    .stream()
+                                    .map(d -> (Device) d)
+                                    .map(deviceDTOMapper)
+                                    .toList();
     }
 
-    public DeviceDTO getDevice(Integer id) {
-        return simulationClient.findAllDeviceAgents().stream().map(d -> (Device) d).map(deviceDTOMapper).findAny().orElseThrow(); // todo
+    public DeviceDTO getDevice(Integer deviceId) {
+        return simulationClient.findDeviceAgentById(deviceId)
+                                    .map(d -> (Device) d)
+                                    .map(deviceDTOMapper)
+                                    .orElseThrow(() -> new DeviceNotFoundException(
+                                            "device with id [%s] not found".formatted(deviceId)
+                                    ));
     }
 }

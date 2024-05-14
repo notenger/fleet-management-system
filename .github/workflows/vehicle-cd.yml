@@ -9,9 +9,6 @@ on:
 #      - vehicle/**
 
 env:
-  AWS_REGION: eu-central-1
-  ECS_CLUSTER: FmsCluster
-
   ECR_REPOSITORY: vehicle
   ECS_SERVICE: vehicle
   ECS_TASK_DEFINITION: aws/fms-vehicle-task-definition.json
@@ -43,7 +40,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ env.AWS_REGION }}
+          aws-region: ${{ secrets.AWS_REGION }}
 
       - uses: actions/setup-java@v3
         with:
@@ -84,10 +81,18 @@ jobs:
           container-name: ${{ env.CONTAINER_NAME }}
           image: ${{ steps.build-image.outputs.image }}
 
+      - name: Update environment variables in the Amazon ECS task definition
+        run: |
+          echo "Dockerrun.aws.json before updating tag"
+          cat ${{ ECS_TASK_DEFINITION }}          
+          sed -i 's/"SPRING_DATASOURCE_PASSWORD",\s*"value":\s*"[a-z]*"/"SPRING_DATASOURCE_PASSWORD", "value": "password"/' ${{ ECS_TASK_DEFINITION }}
+          echo "Dockerrun.aws.json after updating tag"
+          cat ${{ ECS_TASK_DEFINITION }}
+
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@df9643053eda01f169e64a0e60233aacca83799a
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
           service: ${{ env.ECS_SERVICE }}
-          cluster: ${{ env.ECS_CLUSTER }}
+          cluster: ${{ secrets.ECS_CLUSTER }}
           wait-for-service-stability: true

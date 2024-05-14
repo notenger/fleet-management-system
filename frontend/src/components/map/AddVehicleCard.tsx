@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Stack from "@mui/material/Stack";
-import Slider from "@mui/material/Slider";
 import { Button } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import Title from "../muitemplate/Title";
-import DeleteIcon from "@mui/icons-material/Delete";
+import Title from "../shared/Title";
 import {
   addVehicle,
   registerDevice,
@@ -12,7 +10,7 @@ import {
 } from "../../services/httpClient.js";
 
 export default function AddVehicleCard({ landmark, fetchVehicles }) {
-  const [vehicleSpeed, setVehicleSpeed] = useState(160);
+  const [vehicleSpeed, setVehicleSpeed] = useState(400);
 
   const generateRandomString = (length) => {
     let result = "";
@@ -64,7 +62,7 @@ export default function AddVehicleCard({ landmark, fetchVehicles }) {
       <Title>{landmark}</Title>
       <TextField
         id="outlined-basic"
-        label="Average speed, km/h"
+        label="Average speed, km/h/100"
         variant="outlined"
         value={vehicleSpeed}
         onChange={(e) => {

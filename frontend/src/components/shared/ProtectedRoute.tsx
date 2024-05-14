@@ -1,17 +1,13 @@
-import { useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
+import CircularProgress from "@mui/material/CircularProgress";
 
 export default function ProtectedRoute({ children }) {
   const auth = useAuth();
-  const navigate = useNavigate();
 
   useEffect(() => {
-    // if (auth.user === undefined) auth.login();
-    // if (auth.isTokenExpired()) navigate("/logout");
     if (!auth.isAuthenticated()) auth.login();
   });
 
-  // return auth.user === undefined ? "" : children;
-  return !auth.isAuthenticated() ? "" : children;
+  return !auth.isAuthenticated() ? <CircularProgress /> : children;
 }

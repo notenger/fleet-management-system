@@ -47,13 +47,13 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-<!--            <dependency>-->
-<!--                <groupId>org.springframework.security</groupId>-->
-<!--                <artifactId>spring-security-bom</artifactId>-->
-<!--                <version>6.0.6</version>-->
-<!--                <type>pom</type>-->
-<!--                <scope>import</scope>-->
-<!--            </dependency>-->
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-bom</artifactId>
+                <version>6.0.6</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -67,32 +67,18 @@
             <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
     </dependencies>
     <build>
-        <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+        <pluginManagement>
             <plugins>
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>build-helper-maven-plugin</artifactId>
-                    <version>3.0.0</version>
-                    <executions>
-                        <execution>
-                            <id>reserve-tomcat-port</id>
-                            <goals>
-                                <goal>reserve-network-port</goal>
-                            </goals>
-                            <phase>process-resources</phase>
-<!--                            <configuration>-->
-<!--                                <portNames>-->
-<!--                                    <portName>tomcat.http.port</portName>-->
-<!--                                </portNames>-->
-<!--                            </configuration>-->
-                        </execution>
-                    </executions>
-                </plugin>
                 <plugin>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
@@ -103,11 +89,11 @@
                             <goals>
                                 <goal>start</goal>
                             </goals>
-<!--                            <configuration>-->
-<!--                                <arguments>-->
-<!--                                    <argument>-server.port=${tomcat.http.port}</argument>-->
-<!--                                </arguments>-->
-<!--                            </configuration>-->
+                            <configuration>
+                                <arguments>
+                                    <argument>-server.port=${tomcat.http.port}</argument>
+                                </arguments>
+                            </configuration>
                         </execution>
                         <execution>
                             <id>post-integration-test</id>
@@ -141,10 +127,29 @@
                             <exclude>**/*IntegrationTest.java</exclude>
                             <exclude>**/*IT.java</exclude>
                         </excludes>
-<!--                        <systemPropertyVariables>-->
-<!--                            <test.server.port>${tomcat.http.port}</test.server.port>-->
-<!--                        </systemPropertyVariables>-->
+                        <systemPropertyVariables>
+                            <test.server.port>${tomcat.http.port}</test.server.port>
+                        </systemPropertyVariables>
                     </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>build-helper-maven-plugin</artifactId>
+                    <version>3.0.0</version>
+                    <executions>
+                        <execution>
+                            <id>reserve-tomcat-port</id>
+                            <goals>
+                                <goal>reserve-network-port</goal>
+                            </goals>
+                            <phase>process-resources</phase>
+                            <configuration>
+                                <portNames>
+                                    <portName>tomcat.http.port</portName>
+                                </portNames>
+                            </configuration>
+                        </execution>
+                    </executions>
                 </plugin>
                 <plugin>
                     <groupId>com.google.cloud.tools</groupId>

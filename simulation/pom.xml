@@ -24,7 +24,7 @@
 <!--                            <goal>start</goal>-->
 <!--                        </goals>-->
 <!--                        <configuration>-->
-<!--                            <skip>true</skip> &lt;!&ndash; Skip execution for this module &ndash;&gt;-->
+<!--                            <skip>true</skip>-->
 <!--                        </configuration>-->
 <!--                    </execution>-->
 <!--                    <execution>-->
@@ -33,7 +33,7 @@
 <!--                            <goal>stop</goal>-->
 <!--                        </goals>-->
 <!--                        <configuration>-->
-<!--                            <skip>true</skip> &lt;!&ndash; Skip execution for this module &ndash;&gt;-->
+<!--                            <skip>true</skip>-->
 <!--                        </configuration>-->
 <!--                    </execution>-->
 <!--                </executions>-->

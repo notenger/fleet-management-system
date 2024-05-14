@@ -51,7 +51,6 @@ public class VehicleService {
         vehicleDao.insertVehicle(vehicle);
 
         AttachDeviceRequest request = new AttachDeviceRequest(groupName);
-        log.info("attach device request {}", request);
         deviceClient.attachDevice(deviceId, request);
     }
 

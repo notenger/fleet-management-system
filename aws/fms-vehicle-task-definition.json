@@ -27,6 +27,10 @@
                 {
                     "name": "CLIENTS_TELEMATICS_URL",
                     "value": "http://172.31.16.254:8082"
+                },
+                {
+                    "name": "SPRING_DATASOURCE_PASSWORD",
+                    "value": "from secrets"
                 }
             ],
             "mountPoints": [],

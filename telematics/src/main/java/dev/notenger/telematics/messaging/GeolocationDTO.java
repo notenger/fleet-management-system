@@ -4,7 +4,6 @@ import java.util.List;
 
 public record GeolocationDTO(
         Integer deviceId,
-        Integer vehicleId,
         Double latitude,
         Double longitude,
         Double heading,

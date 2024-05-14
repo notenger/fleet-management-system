@@ -10,7 +10,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import java.util.List;
 
 @Configuration
-//@EnableWebMvc
 public class WebMvcConfig implements WebMvcConfigurer {
 
     @Value("#{'${cors.allowed-origins}'.split(',')}")
@@ -32,9 +31,5 @@ public class WebMvcConfig implements WebMvcConfigurer {
         allowedMethods.forEach(corsRegistration::allowedMethods);
         allowedHeaders.forEach(corsRegistration::allowedHeaders);
         exposedHeaders.forEach(corsRegistration::exposedHeaders);
-
-        corsRegistration
-                .allowCredentials(true)
-                .maxAge(3600);
     }
 }

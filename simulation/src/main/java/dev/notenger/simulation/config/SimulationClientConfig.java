@@ -21,6 +21,7 @@ public class SimulationClientConfig implements SimulationCallback {
     public SimulationClient simulationClient() {
         final SimulationClient client = new SimulationClient();
         client.setCallback(this);
+        client.setSensorCollectionFrequency(100L);
         IExperimentHost host = new ExperimentHost(client);
         client.setup(host);
         host.launch();

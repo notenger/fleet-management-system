@@ -1,14 +1,6 @@
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-  useRef,
-  ReactNode,
-} from "react";
+import React, { createContext, useContext, useState, ReactNode } from "react";
 import AuthService from "./AuthService";
 import { User } from "oidc-client-ts";
-import jwtDecode, { JwtPayload, JwtHeader } from "jwt-decode";
 
 const AuthContext = createContext(null!);
 
@@ -27,21 +19,16 @@ function AuthProvider({ children }: { children: ReactNode }) {
 
   const loginCallback = async (): Promise<void> => {
     const authedUser = await authService.loginCallback();
-    console.log("authedUser:", authedUser);
     setUser(authedUser);
   };
 
   const isAuthenticated = () => {
-    if (user === undefined) return false;
+    if (user === undefined || isTokenExpired()) return false;
     return true;
   };
 
   const isTokenExpired = () => {
-    const expiration = JSON.parse(
-      sessionStorage.getItem(
-        `oidc.user:${process.env.REACT_APP_AUTHORITY}:${process.env.REACT_APP_CLIENT_ID}`
-      ) || "null"
-    )?.expires_at;
+    const expiration = user?.expires_at;
 
     if (Date.now() > expiration * 1000) {
       return true;
@@ -61,10 +48,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
 
   const logout = async (): Promise<void> => {
     try {
-      if (process.env.REACT_APP_OIDC_PROVIDER === "Cognito") {
-        await cognitoLogout();
-      } else await authService.logout();
-
+      await authService.logout();
       console.log("Logout successful!");
     } catch (error) {
       console.error("Error during logout:", error);
@@ -72,24 +56,11 @@ function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const cognitoLogout = async () => {
-    const endSessionEndpoint = `${process.env.REACT_APP_COGNITO_DOMAIN}/logout`;
-    const cb = encodeURIComponent(`${process.env.REACT_APP_CLIENT_BASE_URL}`);
-    const url = `${endSessionEndpoint}?client_id=${process.env.REACT_APP_CLIENT_ID}&logout_uri=${cb}`;
-
-    window.open(url, "_self");
-    sessionStorage.removeItem(
-      `oidc.user:${process.env.REACT_APP_AUTHORITY}:${process.env.REACT_APP_CLIENT_ID}`
-    );
-    setUser(null);
-  };
-
   const value = {
     user,
     login,
     logout,
     loginCallback,
-    cognitoLogout,
     isAuthenticated,
     isTokenExpired,
   };

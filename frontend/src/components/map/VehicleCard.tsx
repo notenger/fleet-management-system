@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Stack from "@mui/material/Stack";
 import Slider from "@mui/material/Slider";
 import { Button } from "@mui/material";
-import Title from "../muitemplate/Title";
+import Title from "../shared/Title";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {
   deleteVehicle,
@@ -12,17 +12,16 @@ import {
   getAvailableDevices,
 } from "../../services/httpClient.js";
 
-export default function VehicleCard({ vehicle, fetchVehicles }) {
+function VehicleCard({ vehicle, fetchVehicles }) {
   const [vehicleSpeed, setVehicleSpeed] = useState();
 
   useEffect(() => {
     getDevice(vehicle.deviceId)
       .then((res) => {
-        console.log("getDevice response: " + JSON.stringify(res));
         setVehicleSpeed(res.data.averageSpeed);
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       })
       .finally(() => {});
   }, []);
@@ -41,32 +40,32 @@ export default function VehicleCard({ vehicle, fetchVehicles }) {
       }
       await fetchVehicles();
     } catch (error) {
-      console.error("Error deleting vehicle and devices:", error);
+      console.error("Error deleting vehicle:", error);
     }
   };
 
   return (
     <Stack spacing={2}>
       <Title>{"ID " + vehicle.id}</Title>
-      <Title>{vehicleSpeed + " km/h"}</Title>
+      <Title>{vehicleSpeed + " km/h/100"}</Title>
       <Slider
         aria-label="Volume"
         value={vehicleSpeed}
-        min={70}
-        max={300}
+        defaultValue={400}
+        min={200}
+        max={600}
         onChange={(id, value: number | number[]) => {
           setVehicleSpeed(value);
           updateDevice(vehicle.deviceId, { averageSpeed: value })
             .then((res) => {
-              console.log(res);
+              console.log("Successfully updated device");
             })
             .catch((err) => {
-              console.log(err);
+              console.error(err);
             })
             .finally(() => {});
         }}
       />
-
       <Button
         variant="outlined"
         startIcon={<DeleteIcon />}
@@ -77,3 +76,5 @@ export default function VehicleCard({ vehicle, fetchVehicles }) {
     </Stack>
   );
 }
+
+export default VehicleCard;
