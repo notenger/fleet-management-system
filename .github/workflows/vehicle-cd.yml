@@ -84,10 +84,10 @@ jobs:
       - name: Update environment variables in the Amazon ECS task definition
         run: |
           echo "Dockerrun.aws.json before updating tag"
-          cat ${{ ECS_TASK_DEFINITION }}          
-          sed -i 's/"SPRING_DATASOURCE_PASSWORD",\s*"value":\s*"[a-z]*"/"SPRING_DATASOURCE_PASSWORD", "value": "password"/' ${{ ECS_TASK_DEFINITION }}
+          cat ${{ env.ECS_TASK_DEFINITION }}          
+          sed -i 's/"SPRING_DATASOURCE_PASSWORD",\s*"value":\s*"[a-z]*"/"SPRING_DATASOURCE_PASSWORD", "value": "password"/' ${{ env.ECS_TASK_DEFINITION }}
           echo "Dockerrun.aws.json after updating tag"
-          cat ${{ ECS_TASK_DEFINITION }}
+          cat ${{ env.ECS_TASK_DEFINITION }}
 
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@df9643053eda01f169e64a0e60233aacca83799a
