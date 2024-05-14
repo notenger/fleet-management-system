@@ -1,27 +1,14 @@
 package dev.notenger.simulation.device;
 
-import com.anylogic.engine.IPathData;
 import com.anylogic.engine.Point;
-import com.anylogic.engine.markup.Curve;
-import com.anylogic.engine.markup.GISCurve;
-import com.anylogic.engine.markup.GISPoint;
 import com.notenger.model.DeviceAgent;
 import com.notenger.model.GISPlace;
 import com.notenger.model.SimulationMessage;
-import dev.notenger.simulation.place.Place;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
-import java.security.GuardedObject;
-import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.Map;
-import java.util.Queue;
 import java.util.Random;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicReference;
 
 @Data
 @Builder
@@ -43,7 +30,7 @@ public class Device extends DeviceAgent {
     private static final double BASE_CONSUMPTION_RATE = 0.06;
     private static final double SPEED_LIMIT = 90;
     private static final double RANDOM_FACTOR = 0.1;
-    private static final double HUNDRED_KPH = 100;
+    private static final int HUNDRED_KPH = 100;
 
     private static final Random random = new Random();
 

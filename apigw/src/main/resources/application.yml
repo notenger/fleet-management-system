@@ -43,11 +43,6 @@ spring:
 keycloak:
   realm: spring-boot-code
   domain: localhost:9081
-#  adminClientId: admin-cli
-#  adminClientSecret: 3EgmKg4vh9BqYmfPay9l4S3eN2I3ZeTW
-#  client: authenticationClientId
-#  urls:
-#    auth: http://${keycloak.domain}
 
 logging:
   level:

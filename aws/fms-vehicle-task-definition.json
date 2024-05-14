@@ -5,7 +5,7 @@
             "name": "vehicle",
             "image": "919782984342.dkr.ecr.eu-central-1.amazonaws.com/vehicle:04.05.2024.17.53.34",
             "cpu": 0,
-            "memory": 512,
+            "memory": 900,
             "portMappings": [
                 {
                     "name": "vehicle-8080-tcp",
@@ -27,10 +27,6 @@
                 {
                     "name": "CLIENTS_TELEMATICS_URL",
                     "value": "http://172.31.16.254:8082"
-                },
-                {
-                    "name": "SPRING_DATASOURCE_PASSWORD",
-                    "value": "value"
                 }
             ],
             "mountPoints": [],

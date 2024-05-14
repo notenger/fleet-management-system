@@ -81,14 +81,6 @@ jobs:
           container-name: ${{ env.CONTAINER_NAME }}
           image: ${{ steps.build-image.outputs.image }}
 
-      - name: Update environment variables in the Amazon ECS task definition
-        run: |
-          echo "Dockerrun.aws.json before updating tag"
-          cat aws/fms-vehicle-task-definition.json
-          sed -i 's/"name": "SPRING_DATASOURCE_PASSWORD",\s*"value": "[^"]*"/"name": "SPRING_DATASOURCE_PASSWORD", "value": "password"/' aws/fms-vehicle-task-definition.json
-          echo "Dockerrun.aws.json after updating tag"
-          cat aws/fms-vehicle-task-definition.json
-
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@df9643053eda01f169e64a0e60233aacca83799a
         with:

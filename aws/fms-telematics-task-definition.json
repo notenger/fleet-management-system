@@ -5,7 +5,7 @@
             "name": "telematics",
             "image": "919782984342.dkr.ecr.eu-central-1.amazonaws.com/telematics:03.05.2024.13.43.31",
             "cpu": 0,
-            "memory": 666,
+            "memory": 660,
             "links": [
                 "mongo"
             ],

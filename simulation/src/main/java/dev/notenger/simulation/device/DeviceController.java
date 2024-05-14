@@ -18,8 +18,7 @@ public class DeviceController {
 
     @PostMapping
     public void registerDevice(@RequestBody RegisterDeviceRequest request) {
-        log.info("registering device {}", request);
-        Device device = deviceService.registerDevice(request.serialNumber(), request.averageSpeed());
+        deviceService.registerDevice(request.serialNumber(), request.averageSpeed());
     }
 
     @GetMapping
@@ -29,7 +28,6 @@ public class DeviceController {
 
     @GetMapping("available")
     public List<DeviceDTO> getAvailableDevices() {
-        log.info("requested available devices {}", deviceService.getAllAvailableDevices());
         return deviceService.getAllAvailableDevices();
     }
 
@@ -40,19 +38,16 @@ public class DeviceController {
 
     @PutMapping("{deviceId}")
     public void updateDevice(@PathVariable("deviceId") Integer deviceId, @RequestBody UpdateDeviceRequest request) {
-        log.info("requested averageSpeed is " + request.averageSpeed());
         deviceService.updateDevice(deviceId, request.averageSpeed());
     }
 
     @PutMapping("attach/{deviceId}")
     public void attachDevice(@PathVariable("deviceId") Integer deviceId, @RequestBody AttachDeviceRequest request) {
-        log.info("attaching device {} for place {}", deviceId, request.placeName());
         deviceService.attachDevice(deviceId, request.placeName());
     }
 
     @PutMapping("detach/{deviceId}")
     public void detachDevice(@PathVariable("deviceId") Integer deviceId) {
-        log.info("detaching device {}", deviceId);
         deviceService.detachDevice(deviceId);
     }
 

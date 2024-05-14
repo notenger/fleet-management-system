@@ -13,6 +13,6 @@ import java.util.List;
 public interface TelematicsClient {
 
     @GetMapping("last-odometer-reading/{deviceId}")
-    Double getLastOdometerReading(@PathVariable("deviceId") Integer deviceId);
+    GetOdometerResponse getLastOdometerReading(@PathVariable("deviceId") Integer deviceId);
 
 }

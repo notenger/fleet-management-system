@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.notenger.clients.device.exception.DeviceNotFoundException;
 import dev.notenger.clients.place.exception.PlaceNotFoundException;
+import dev.notenger.clients.telematics.exception.TelemetryNotFoundException;
 import feign.Response;
 import feign.Util;
 import feign.codec.ErrorDecoder;
@@ -32,6 +33,8 @@ public class CustomErrorDecoder implements ErrorDecoder {
                     yield new PlaceNotFoundException(errorMessage);
                 if (errorMessage.contains("device"))
                     yield new DeviceNotFoundException(errorMessage);
+                if (errorMessage.contains("telemetry"))
+                    yield new TelemetryNotFoundException(errorMessage);
                 yield new ResourceNotFoundException(errorMessage);
             }
             default -> errorDecoder.decode(methodKey, response);
@@ -42,7 +45,7 @@ public class CustomErrorDecoder implements ErrorDecoder {
         try {
             return Util.toString(response.body().asReader());
         } catch (IOException e) {
-            return "Error extracting error message";
+            return "Couldn't extract error message";
         }
     }
 }

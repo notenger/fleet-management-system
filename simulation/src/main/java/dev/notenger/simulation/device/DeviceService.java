@@ -23,14 +23,13 @@ public class DeviceService {
     private final PlaceService placeService;
     private final DeviceDTOMapper deviceDTOMapper;
 
-    public Device registerDevice(String serialNumber, Double averageSpeed) {
+    public void registerDevice(String serialNumber, Double averageSpeed) {
         Device device = Device.builder()
                 .serialNumber(serialNumber)
                 .averageSpeed(averageSpeed)
                 .build();
         simulationClient.addDeviceAgent(device);
 
-        return device;
     }
 
     public void attachDevice(Integer deviceId, String placeName) {

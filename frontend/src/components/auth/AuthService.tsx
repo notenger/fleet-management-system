@@ -40,6 +40,7 @@ export default class AuthService {
     const settings = {
       authority: process.env.REACT_APP_AUTHORITY!,
       client_id: process.env.REACT_APP_CLIENT_ID!,
+      client_secret: process.env.REACT_APP_CLIENT_SECRET!,
       redirect_uri: `${process.env.REACT_APP_CLIENT_BASE_URL}/openid/callback`,
       silent_redirect_uri: `${process.env.REACT_APP_CLIENT_BASE_URL}/openid/callback`,
       post_logout_redirect_uri: `${process.env.REACT_APP_CLIENT_BASE_URL}`,

@@ -2,6 +2,7 @@ package dev.notenger.vehicle.service;
 
 import dev.notenger.clients.device.AttachDeviceRequest;
 import dev.notenger.clients.device.DeviceClient;
+import dev.notenger.clients.telematics.GetOdometerResponse;
 import dev.notenger.clients.telematics.TelematicsClient;
 import dev.notenger.vehicle.entity.Vehicle;
 import dev.notenger.clients.vehicle.exception.DuplicateVehicleException;
@@ -67,8 +68,8 @@ public class VehicleService {
                         "vehicle with id [%s] not found".formatted(vehicleId)
                 ));
 
-        Double odometerReading = telematicsClient.getLastOdometerReading(vehicle.getDeviceId());
-        vehicle.setLastOdometerReading(odometerReading);
+        GetOdometerResponse response = telematicsClient.getLastOdometerReading(vehicle.getDeviceId());
+        vehicle.setLastOdometerReading(response.odometer());
         vehicleDao.updateVehicle(vehicle);
     }
 

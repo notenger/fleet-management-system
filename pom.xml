@@ -25,10 +25,9 @@
         <spring.boot.maven.plugin.version>3.0.0</spring.boot.maven.plugin.version>
         <spring.boot.dependencies.version>3.0.0</spring.boot.dependencies.version>
         <spring.cloud-version>2022.0.3</spring.cloud-version>
-        <spring-security.version>6.0.0</spring-security.version>
-        <docker.image.registry/>
-        <docker.image.repository/>
-        <docker.image.tag/>
+        <docker.image.registry />
+        <docker.image.repository />
+        <docker.image.tag />
     </properties>
 
     <dependencyManagement>
@@ -47,14 +46,9 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <dependency>
-                <groupId>org.springframework.security</groupId>
-                <artifactId>spring-security-bom</artifactId>
-                <version>6.0.6</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
+
         </dependencies>
+
     </dependencyManagement>
 
     <dependencies>
@@ -67,15 +61,11 @@
             <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-webflux</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
     </dependencies>
+
     <build>
         <pluginManagement>
             <plugins>
@@ -90,9 +80,7 @@
                                 <goal>start</goal>
                             </goals>
                             <configuration>
-                                <arguments>
-                                    <argument>-server.port=${tomcat.http.port}</argument>
-                                </arguments>
+                                <jmxPort>9011</jmxPort>
                             </configuration>
                         </execution>
                         <execution>
@@ -123,33 +111,7 @@
                             <include>**/*IntegrationTest.java</include>
                             <include>**/*IT.java</include>
                         </includes>
-                        <excludes>
-                            <exclude>**/*IntegrationTest.java</exclude>
-                            <exclude>**/*IT.java</exclude>
-                        </excludes>
-                        <systemPropertyVariables>
-                            <test.server.port>${tomcat.http.port}</test.server.port>
-                        </systemPropertyVariables>
                     </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>build-helper-maven-plugin</artifactId>
-                    <version>3.0.0</version>
-                    <executions>
-                        <execution>
-                            <id>reserve-tomcat-port</id>
-                            <goals>
-                                <goal>reserve-network-port</goal>
-                            </goals>
-                            <phase>process-resources</phase>
-                            <configuration>
-                                <portNames>
-                                    <portName>tomcat.http.port</portName>
-                                </portNames>
-                            </configuration>
-                        </execution>
-                    </executions>
                 </plugin>
                 <plugin>
                     <groupId>com.google.cloud.tools</groupId>

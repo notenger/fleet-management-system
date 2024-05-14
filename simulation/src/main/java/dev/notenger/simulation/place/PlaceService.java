@@ -14,6 +14,7 @@ import java.util.List;
 public class PlaceService {
 
     private final SimulationClient simulationClient;
+    private final PlaceDTOMapper placeDTOMapper;
 
     public void addPlace(String name, Double latitude, Double longitude) {
         if (simulationClient.findGISPlaceByName(name).isPresent()) {
@@ -27,10 +28,10 @@ public class PlaceService {
     }
 
     public List<PlaceDTO> getAllPlaces() {
-        return simulationClient.findAllGISPlaces().stream().map(p -> (Place) p)
-                .map(p -> new PlaceDTO(
-                        p.getName(), p.getLatitude(), p.getLongitude())
-                )
+        return simulationClient.findAllGISPlaces()
+                .stream()
+                .map(p -> (Place) p)
+                .map(placeDTOMapper)
                 .toList();
     }
 

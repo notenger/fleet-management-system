@@ -5,7 +5,7 @@
             "name": "simulation",
             "image": "919782984342.dkr.ecr.eu-central-1.amazonaws.com/simulation:latest",
             "cpu": 0,
-            "memory": 512,
+            "memory": 900,
             "portMappings": [
                 {
                     "name": "simulation-8081-tcp",

@@ -33,17 +33,11 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: https://cognito-idp.eu-central-1.amazonaws.com/eu-central-1_mRlYi1e69
-#          issuer-uri: http://${keycloak.domain}/realms/${keycloak.realm}
+          issuer-uri: http://${keycloak.domain}/realms/${keycloak.realm}
 
 keycloak:
   realm: spring-boot-code
   domain: keycloak:9081
-#  adminClientId: admin-cli
-#  adminClientSecret: 3EgmKg4vh9BqYmfPay9l4S3eN2I3ZeTW
-#  client: authenticationClientId
-#  urls:
-#    auth: http://${keycloak.domain}
 
 logging:
   level:
