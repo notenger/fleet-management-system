@@ -1,9 +1,9 @@
 package dev.notenger.simulation.place;
 
-import com.notenger.model.SimulationClient;
-import dev.notenger.clients.place.exception.DuplicatePlaceException;
 import dev.notenger.clients.place.PlaceDTO;
+import dev.notenger.clients.place.exception.DuplicatePlaceException;
 import dev.notenger.clients.place.exception.PlaceNotFoundException;
+import dev.notenger.simulation.model.SimulationClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

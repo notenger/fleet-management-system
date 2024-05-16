@@ -3,8 +3,6 @@ package dev.notenger.vehicle.service;
 import com.github.javafaker.Faker;
 import dev.notenger.clients.device.DeviceClient;
 import dev.notenger.clients.telematics.TelematicsClient;
-import dev.notenger.clients.vehicle.AddVehicleRequest;
-import dev.notenger.clients.vehicle.UpdateVehicleRequest;
 import dev.notenger.clients.vehicle.exception.DuplicateVehicleException;
 import dev.notenger.clients.vehicle.exception.NoChangesDetectedException;
 import dev.notenger.clients.vehicle.exception.VehicleNotFoundException;

@@ -22,11 +22,11 @@
                 },
                 {
                     "name": "CLIENTS_DEVICE_URL",
-                    "value": "http://172.31.23.43:8081"
+                    "value": "http://172.31.37.141:8081"
                 },
                 {
                     "name": "CLIENTS_TELEMATICS_URL",
-                    "value": "http://172.31.16.254:8082"
+                    "value": "http://172.31.35.250:8082"
                 }
             ],
             "mountPoints": [],

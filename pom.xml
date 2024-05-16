@@ -20,11 +20,10 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>18</maven.compiler.source>
-        <maven.compiler.target>18</maven.compiler.target>
-        <spring.boot.maven.plugin.version>3.0.0</spring.boot.maven.plugin.version>
-        <spring.boot.dependencies.version>3.0.0</spring.boot.dependencies.version>
-        <spring.cloud-version>2022.0.3</spring.cloud-version>
+        <maven.compiler.release>21</maven.compiler.release>
+        <spring.boot.maven.plugin.version>3.2.5</spring.boot.maven.plugin.version>
+        <spring.boot.dependencies.version>3.2.5</spring.boot.dependencies.version>
+        <spring.cloud-version>2023.0.1</spring.cloud-version>
         <docker.image.registry />
         <docker.image.repository />
         <docker.image.tag />
@@ -42,13 +41,11 @@
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring.cloud-version}</version>
+                <version>${spring-cloud.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-
         </dependencies>
-
     </dependencyManagement>
 
     <dependencies>
@@ -70,6 +67,24 @@
         <pluginManagement>
             <plugins>
                 <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>build-helper-maven-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>reserve-tomcat-port</id>
+                            <goals>
+                                <goal>reserve-network-port</goal>
+                            </goals>
+                            <phase>process-resources</phase>
+                            <configuration>
+                                <portNames>
+                                    <portName>tomcat.http.port</portName>
+                                </portNames>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
                     <version>${spring.boot.maven.plugin.version}</version>
@@ -80,7 +95,10 @@
                                 <goal>start</goal>
                             </goals>
                             <configuration>
-                                <jmxPort>9011</jmxPort>
+<!--                                <jmxPort>9011</jmxPort>-->
+                                <arguments>
+                                    <argument>--server.port=${tomcat.http.port}</argument>
+                                </arguments>
                             </configuration>
                         </execution>
                         <execution>
@@ -112,6 +130,9 @@
                             <include>**/*IT.java</include>
                         </includes>
                     </configuration>
+                    <systemPropertyVariables>
+                        <test.server.port>${tomcat.http.port}</test.server.port>
+                    </systemPropertyVariables>
                 </plugin>
                 <plugin>
                     <groupId>com.google.cloud.tools</groupId>
@@ -153,7 +174,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.0</version>
+                <version>3.13.0</version>
             </plugin>
         </plugins>
     </build>

@@ -62,7 +62,7 @@ export default function AddVehicleCard({ landmark, fetchVehicles }) {
       <Title>{landmark}</Title>
       <TextField
         id="outlined-basic"
-        label="Average speed, km/h/100"
+        label="Avg speed, km/h/100"
         variant="outlined"
         value={vehicleSpeed}
         onChange={(e) => {

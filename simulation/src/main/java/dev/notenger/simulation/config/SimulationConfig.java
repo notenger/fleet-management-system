@@ -1,17 +1,19 @@
 package dev.notenger.simulation.config;
 
-import com.anylogic.engine.*;
+import com.anylogic.engine.Experiment;
 import com.anylogic.engine.gui.ExperimentHost;
 import com.anylogic.engine.gui.IExperimentHost;
-import com.notenger.model.*;
 import dev.notenger.amqp.RabbitMQMessageProducer;
+import dev.notenger.simulation.model.SimulationCallback;
+import dev.notenger.simulation.model.SimulationClient;
+import dev.notenger.simulation.model.SimulationMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @RequiredArgsConstructor
 @Configuration
-public class SimulationClientConfig implements SimulationCallback {
+public class SimulationConfig implements SimulationCallback {
 
     private final RabbitMQMessageProducer rabbitMQMessageProducer;
 
@@ -24,7 +26,7 @@ public class SimulationClientConfig implements SimulationCallback {
         client.setup(host);
         host.launch();
 
-        if ( client.getState() == Experiment.IDLE ) {
+        if (client.getState() == Experiment.IDLE) {
             client.run();
         }
         host.setPresentable(client.getEngine().getRoot());

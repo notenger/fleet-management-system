@@ -12,9 +12,8 @@ public class TelematicsConsumer {
 
     private final TelematicsService telematicsService;
 
-    @RabbitListener(queues = "${rabbitmq.queues.telematics}")
+    @RabbitListener(queues = "${rabbitmq.queues.telematics}") // , containerFactory = "rabbitListenerContainerFactory"
     public void consumer(Telemetry telemetry) {
-//        log.info("Consumed from queue for device with id {}", telemetry.getDeviceId());
         telematicsService.send(telemetry);
     }
 }

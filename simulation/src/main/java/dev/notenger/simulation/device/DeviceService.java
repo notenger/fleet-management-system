@@ -1,10 +1,10 @@
 package dev.notenger.simulation.device;
 
 import com.anylogic.engine.Point;
-import com.notenger.model.SimulationClient;
 import dev.notenger.clients.device.DeviceDTO;
 import dev.notenger.clients.device.exception.DeviceNotFoundException;
 import dev.notenger.clients.vehicle.exception.VehicleNotFoundException;
+import dev.notenger.simulation.model.SimulationClient;
 import dev.notenger.simulation.place.Place;
 import dev.notenger.simulation.place.PlaceService;
 import lombok.RequiredArgsConstructor;

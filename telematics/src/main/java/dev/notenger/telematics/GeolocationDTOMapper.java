@@ -1,6 +1,5 @@
 package dev.notenger.telematics;
 
-import dev.notenger.clients.device.DeviceDTO;
 import dev.notenger.telematics.messaging.GeolocationDTO;
 import org.springframework.stereotype.Service;
 

@@ -18,8 +18,10 @@ function Dashboard() {
   const [telemetry, setTelemetry] = useState({
     averageSpeed: 0,
   });
-
+  const [isConnected, setConnected] = useState(false);
+  const [firstMessageReceived, setFirstMessageReceived] = useState(false);
   const [setTitle, setCopyright] = useOutletContext();
+
   useEffect(() => {
     setTitle("Dashboard");
     setCopyright(<Copyright sx={{ pt: 4 }} />);
@@ -28,7 +30,19 @@ function Dashboard() {
   const [fuelConsumptionEfficiency, setFuelConsumptionEfficiency] = useState(0);
   const prevFuelConsumptionEfficiency = React.useRef<number | null>(null);
 
+  const onConnect = () => {
+    if (isConnected === false) {
+      console.log("Connected to websocket");
+      setConnected(true);
+    }
+  };
+
   const onMessageReceived = (message) => {
+    if (firstMessageReceived === false) {
+      console.log("Message:", message);
+      setFirstMessageReceived(true);
+    }
+
     setTelemetry(message);
     const efficiency =
       message.averageFuelGauge * (100 / message.averageOdometer);
@@ -84,7 +98,7 @@ function Dashboard() {
                 title=""
                 style={{ marginTop: 16 }}
                 value={fuelConsumptionEfficiency}
-                precision={2}
+                precision={3}
                 valueStyle={{
                   color:
                     fuelConsumptionEfficiency <=
@@ -123,8 +137,7 @@ function Dashboard() {
       <SockJsClient
         url={SOCKET_URL}
         topics={["/telematics/telemetry"]}
-        onConnect={console.log("Connected to websocket")}
-        onDisconnect={console.log("Disconnected from websocket")}
+        onConnect={onConnect}
         onMessage={(message) => onMessageReceived(message)}
         debug={false}
       />

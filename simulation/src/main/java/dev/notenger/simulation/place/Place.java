@@ -1,10 +1,6 @@
 package dev.notenger.simulation.place;
 
-import com.anylogic.engine.Point;
-import com.anylogic.engine.markup.GISPoint;
-import com.notenger.model.GISPlace;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import dev.notenger.simulation.model.GISPlace;
 import lombok.Getter;
 
 @Getter

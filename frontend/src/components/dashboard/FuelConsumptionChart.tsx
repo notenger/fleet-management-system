@@ -54,7 +54,11 @@ function FuelConsumptionChart({ value }) {
           <YAxis
             stroke={theme.palette.text.secondary}
             style={theme.typography.body2}
-            tickFormatter={(number) => Math.floor(number)}
+            tickFormatter={(number) => {
+              return number < 100_000
+                ? Math.floor(number)
+                : Math.floor((number / 1000) * 100) / 100 + "K";
+            }}
             type="number"
             domain={["dataMin", "auto"]}
           >

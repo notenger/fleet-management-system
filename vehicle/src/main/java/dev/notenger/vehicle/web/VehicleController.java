@@ -21,13 +21,13 @@ public class VehicleController {
 
     @PostMapping
     public void addVehicle(@RequestBody AddVehicleRequest request) {
-        log.info("add new vehicle request {}", request);
         vehicleService.addVehicle(
                 request.vin(), request.make(), request.model(), request.year(), request.groupName(), request.deviceId());
     }
 
     @GetMapping
     public List<Vehicle> getVehicles() {
+        log.info("Requested all vehicles");
         return vehicleService.getAllVehicles();
     }
 

@@ -56,7 +56,11 @@ export default function OdometerChart({ value }) {
             style={theme.typography.body2}
             type="number"
             domain={["dataMin", "auto"]}
-            tickFormatter={(number) => Math.floor(number)}
+            tickFormatter={(number) => {
+              return number < 100_000
+                ? Math.floor(number)
+                : Math.floor((number / 1000) * 100) / 100 + "K";
+            }}
           >
             <Label
               angle={270}

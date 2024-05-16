@@ -4,19 +4,17 @@ import dev.notenger.clients.device.AttachDeviceRequest;
 import dev.notenger.clients.device.DeviceClient;
 import dev.notenger.clients.telematics.GetOdometerResponse;
 import dev.notenger.clients.telematics.TelematicsClient;
-import dev.notenger.vehicle.entity.Vehicle;
 import dev.notenger.clients.vehicle.exception.DuplicateVehicleException;
 import dev.notenger.clients.vehicle.exception.InvalidVinException;
 import dev.notenger.clients.vehicle.exception.NoChangesDetectedException;
 import dev.notenger.clients.vehicle.exception.VehicleNotFoundException;
+import dev.notenger.vehicle.entity.Vehicle;
 import dev.notenger.vehicle.repository.VehicleDao;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Slf4j

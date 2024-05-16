@@ -73,8 +73,7 @@
             <version>0.0.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
-        <!--        AnyLogic depends on... -->
-            <!--        querydsl-->
+        <!--        querydsl-->
         <dependency>
             <groupId>com.querydsl</groupId>
             <artifactId>querydsl-sql</artifactId>
@@ -89,23 +88,6 @@
             <groupId>com.querydsl</groupId>
             <artifactId>querydsl-core</artifactId>
             <version>4.2.1</version>
-        </dependency>
-<!--        guava-->
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>18.0</version>
-        </dependency>
-        <!--        ejml-->
-        <dependency>
-            <groupId>org.ejml</groupId>
-            <artifactId>ejml-core</artifactId>
-            <version>0.43.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.ejml</groupId>
-            <artifactId>ejml-ddense</artifactId>
-            <version>0.43.1</version>
         </dependency>
         <!-- GeoTools -->
         <dependency>
@@ -143,31 +125,25 @@
             <artifactId>gt-shapefile</artifactId>
             <version>19.0</version>
         </dependency>
-<!--        json-simple-->
+        <!--        json-simple-->
         <dependency>
             <groupId>com.googlecode.json-simple</groupId>
             <artifactId>json-simple</artifactId>
             <version>1.1.1</version>
         </dependency>
-<!--        jts-->
-        <dependency>
-            <groupId>com.vividsolutions</groupId>
-            <artifactId>jts-core</artifactId>
-            <version>1.14.0</version>
-        </dependency>
-<!--        mapdb-->
+        <!--        mapdb -->
         <dependency>
             <groupId>org.mapdb</groupId>
             <artifactId>mapdb</artifactId>
             <version>1.0.6</version>
         </dependency>
-<!--        openmap-->
+        <!--        openmap-->
         <dependency>
             <groupId>com.bbn</groupId>
             <artifactId>openmap</artifactId>
             <version>5.1.15</version>
         </dependency>
-<!--        sa -> jetty-->
+        <!--        sa -> jetty-->
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-client</artifactId>
@@ -223,42 +199,21 @@
             <artifactId>jetty-xml</artifactId>
             <version>9.4.31.v20200723</version>
         </dependency>
-<!--        spark-->
+        <!--        spark-->
         <dependency>
             <groupId>com.sparkjava</groupId>
             <artifactId>spark-core</artifactId>
             <version>2.9.3</version>
         </dependency>
-<!--        websocket-->
-        <dependency>
-            <groupId>org.eclipse.jetty.websocket</groupId>
-            <artifactId>websocket-api</artifactId>
-            <version>9.4.31.v20200723</version>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty.websocket</groupId>
-            <artifactId>websocket-client</artifactId>
-            <version>9.4.31.v20200723</version>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty.websocket</groupId>
-            <artifactId>websocket-common</artifactId>
-            <version>9.4.31.v20200723</version>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty.websocket</groupId>
-            <artifactId>websocket-server</artifactId>
-            <version>9.4.31.v20200723</version>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty.websocket</groupId>
-            <artifactId>websocket-servlet</artifactId>
-            <version>9.4.31.v20200723</version>
-        </dependency>
-        <!--        AnyLogic-->
+        <!--        local repository-->
         <dependency>
             <groupId>dev.notenger</groupId>
-            <artifactId>model</artifactId>
+            <artifactId>simulation-model</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.anylogic</groupId>
+            <artifactId>simulation-model-web</artifactId>
             <version>1.0.0</version>
         </dependency>
         <dependency>
@@ -274,11 +229,6 @@
         <dependency>
             <groupId>com.anylogic</groupId>
             <artifactId>anylogic-engine-sa</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.anylogic</groupId>
-            <artifactId>model-web</artifactId>
             <version>1.0.0</version>
         </dependency>
         <dependency>

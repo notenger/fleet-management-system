@@ -6,6 +6,7 @@ import ListSubheader from "@mui/material/ListSubheader";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import RoomIcon from "@mui/icons-material/Room";
 import GitHubIcon from "@mui/icons-material/GitHub";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 
 export const mainListItems = (
   <React.Fragment>
@@ -37,6 +38,7 @@ export const secondaryListItems = (
         <GitHubIcon />
       </ListItemIcon>
       <ListItemText primary="GitHub" />
+      <OpenInNewIcon />
     </ListItemButton>
   </React.Fragment>
 );

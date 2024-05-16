@@ -1,6 +1,9 @@
 package dev.notenger.simulation.device;
 
-import dev.notenger.clients.device.*;
+import dev.notenger.clients.device.AttachDeviceRequest;
+import dev.notenger.clients.device.DeviceDTO;
+import dev.notenger.clients.device.RegisterDeviceRequest;
+import dev.notenger.clients.device.UpdateDeviceRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;

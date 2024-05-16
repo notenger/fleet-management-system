@@ -1,10 +1,13 @@
 package dev.notenger.simulation.device;
 
 import com.anylogic.engine.Point;
-import com.notenger.model.DeviceAgent;
-import com.notenger.model.GISPlace;
-import com.notenger.model.SimulationMessage;
-import lombok.*;
+import dev.notenger.simulation.model.DeviceAgent;
+import dev.notenger.simulation.model.GISPlace;
+import dev.notenger.simulation.model.SimulationMessage;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
@@ -13,7 +16,6 @@ import java.util.Random;
 @Data
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor(force = true)
 @ToString
 @Slf4j
 public class Device extends DeviceAgent {

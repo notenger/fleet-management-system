@@ -47,6 +47,8 @@ const SOCKET_URL = `${process.env.REACT_APP_API_GATEWAY_URL}/ws-message`;
 function GISMap() {
   const [landmarks, setLandmarks] = useState([]);
   const [vehicles, setVehicles] = useState([]);
+  const [isConnected, setConnected] = useState(false);
+  const [firstMessageReceived, setFirstMessageReceived] = useState(false);
   const [setTitle] = useOutletContext();
 
   const fetchLocations = () => {
@@ -79,8 +81,19 @@ function GISMap() {
     fetchVehicles();
   }, []);
 
+  const onConnect = () => {
+    if (isConnected === false) {
+      console.log("Connected to websocket");
+      setConnected(true);
+    }
+  };
 
   const onMessageReceived = (message) => {
+    if (firstMessageReceived === false) {
+      console.log("Message:", message);
+      setFirstMessageReceived(true);
+    }
+
     const vehicle = vehicles.find((veh) => veh.deviceId === message.deviceId);
 
     if (vehicle) {
@@ -101,9 +114,8 @@ function GISMap() {
   };
 
   const pickVehicleIcon = (vehicleId) => {
-    return vehicleIcons[vehicleId % vehicleIcons.length]
-  }
-
+    return vehicleIcons[vehicleId % vehicleIcons.length];
+  };
 
   const [selectedVehicleId, setSelectedVehicleId] = useState();
   const selectedVehicle = vehicles.find((v) => v.id === selectedVehicleId);
@@ -176,8 +188,7 @@ function GISMap() {
       <SockJsClient
         url={SOCKET_URL}
         topics={["/telematics/geolocation"]}
-        onConnect={console.log("Connected to websocket")}
-        onDisconnect={console.log("Disconnected from websocket")}
+        onConnect={onConnect}
         onMessage={(message) => onMessageReceived(message)}
         debug={false}
       />
