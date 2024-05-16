@@ -5,7 +5,7 @@
             "name": "vehicle",
             "image": "919782984342.dkr.ecr.eu-central-1.amazonaws.com/vehicle:04.05.2024.17.53.34",
             "cpu": 0,
-            "memory": 900,
+            "memoryReservation": 900,
             "portMappings": [
                 {
                     "name": "vehicle-8080-tcp",
