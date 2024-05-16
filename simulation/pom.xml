@@ -211,11 +211,11 @@
             <artifactId>simulation-model</artifactId>
             <version>1.0.0</version>
         </dependency>
-        <dependency>
-            <groupId>com.anylogic</groupId>
-            <artifactId>simulation-model-web</artifactId>
-            <version>1.0.0</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.anylogic</groupId>-->
+<!--            <artifactId>simulation-model-web</artifactId>-->
+<!--            <version>1.0.0</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>com.anylogic</groupId>
             <artifactId>executor</artifactId>
