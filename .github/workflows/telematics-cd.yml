@@ -48,6 +48,7 @@ jobs:
         id: build-image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REGISTRY_ALIAS: b2y2j9p6
           IMAGE_TAG: ${{ steps.build-number.outputs.BUILD_NUMBER }}
         run: |
           echo $ECR_REGISTRY
@@ -59,7 +60,7 @@ jobs:
             -Ddocker.image.repository=$ECR_REPOSITORY \
             -Ddocker.image.tag=$IMAGE_TAG \
             jib:build
-          echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+          echo "image=$ECR_REGISTRY/$ECR_REGISTRY_ALIAS/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
 
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
