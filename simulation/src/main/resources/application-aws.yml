@@ -14,8 +14,7 @@ spring:
     name: simulation
   rabbitmq:
     username: notenger
-    password: mCSZSJIq&HZh+3Nk
-    addresses: b-91d9fd6b-d716-446f-9b59-ce43c870cfbf.mq.eu-central-1.amazonaws.com:5671
+    addresses: b-06ec40b5-3776-41d0-b937-9db8ab61e3b2.mq.eu-central-1.amazonaws.com:5671
 
 eureka:
   client:
