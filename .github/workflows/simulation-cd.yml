@@ -13,6 +13,7 @@ env:
   ECS_SERVICE: simulation
   ECS_TASK_DEFINITION: aws/fms-simulation-task-definition.json
   CONTAINER_NAME: simulation
+  MODULE_NAME: simulation
 
 jobs:
   deploy:
@@ -48,18 +49,16 @@ jobs:
         id: build-image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REGISTRY_ALIAS: b2y2j9p6
+          ECR_REGISTRY_FULL_NAME: ${ECR_REGISTRY}/${ECR_REGISTRY_ALIAS}
           IMAGE_TAG: ${{ steps.build-number.outputs.BUILD_NUMBER }}
         run: |
-          echo $ECR_REGISTRY
-          echo $ECR_REPOSITORY
-          echo $IMAGE_TAG
-
-          mvn -ntp -B verify -pl simulation -am \
-            -Ddocker.image.registry=$ECR_REGISTRY \
+          mvn -ntp -B verify -pl ${{ env.MODULE_NAME }} -am \
+            -Ddocker.image.registry=$ECR_REGISTRY_FULL_NAME \
             -Ddocker.image.repository=$ECR_REPOSITORY \
             -Ddocker.image.tag=$IMAGE_TAG \
             jib:build
-          echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+          echo "image=$ECR_REGISTRY/$ECR_REGISTRY_ALIAS/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
 
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
@@ -69,8 +68,15 @@ jobs:
           container-name: ${{ env.CONTAINER_NAME }}
           image: ${{ steps.build-image.outputs.image }}
 
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@0e613a0980cbf65ed5b322eb7a1e075d28913a83
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
       - name: Deploy Amazon ECS task definition
-        uses: aws-actions/amazon-ecs-deploy-task-definition@df9643053eda01f169e64a0e60233aacca83799a
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1.5.0
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
           service: ${{ env.ECS_SERVICE }}

@@ -13,6 +13,7 @@ env:
   ECS_SERVICE: telematics
   ECS_TASK_DEFINITION: aws/fms-telematics-task-definition.json
   CONTAINER_NAME: telematics
+  MODULE_NAME: telematics
 
 jobs:
   deploy:
@@ -52,19 +53,12 @@ jobs:
           ECR_REGISTRY_FULL_NAME: ${ECR_REGISTRY}/${ECR_REGISTRY_ALIAS}
           IMAGE_TAG: ${{ steps.build-number.outputs.BUILD_NUMBER }}
         run: |
-          echo $ECR_REGISTRY_FULL_NAME
-          echo $ECR_REPOSITORY
-          echo $ECR_REPOSITORY
-          echo $IMAGE_TAG
-          echo ${{ secrets.ECS_CLUSTER }}
-
-          mvn -ntp -B verify -pl telematics -am \
+          mvn -ntp -B verify -pl ${{ env.MODULE_NAME }} -am \
             -Ddocker.image.registry=$ECR_REGISTRY_FULL_NAME \
             -Ddocker.image.repository=$ECR_REPOSITORY \
             -Ddocker.image.tag=$IMAGE_TAG \
             jib:build
           echo "image=$ECR_REGISTRY/$ECR_REGISTRY_ALIAS/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
-          echo $GITHUB_OUTPUT
 
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
@@ -86,6 +80,5 @@ jobs:
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
           service: ${{ env.ECS_SERVICE }}
-          cluster: FmsCluster
-#          cluster: ${{ secrets.ECS_CLUSTER }}
+          cluster: ${{ secrets.ECS_CLUSTER }}
           wait-for-service-stability: true
