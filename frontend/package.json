@@ -9,6 +9,7 @@
     "@mui/material": "^5.14.18",
     "@types/react": "latest",
     "@types/react-dom": "latest",
+    "antd": "^5.17.2",
     "axios": "^1.6.2",
     "leaflet": "^1.9.4",
     "leaflet-rotatedmarker": "^0.2.0",
