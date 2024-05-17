@@ -26,7 +26,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
+          aws-region: ${{ secrets.AWS_REGION }}
 
       - uses: actions/setup-java@v3
         with:
@@ -52,7 +52,7 @@ jobs:
           ECR_REGISTRY_FULL_NAME: ${ECR_REGISTRY}/${ECR_REGISTRY_ALIAS}
           IMAGE_TAG: ${{ steps.build-number.outputs.BUILD_NUMBER }}
         run: |
-          echo ECR_REGISTRY_FULL_NAME
+          echo $ECR_REGISTRY_FULL_NAME
           echo $ECR_REPOSITORY
           echo $ECR_REPOSITORY
           echo $IMAGE_TAG
@@ -75,7 +75,7 @@ jobs:
           image: ${{ steps.build-image.outputs.image }}
 
       - name: Deploy Amazon ECS task definition
-        uses: aws-actions/amazon-ecs-deploy-task-definition@df9643053eda01f169e64a0e60233aacca83799a
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1.5.0
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
           service: ${{ env.ECS_SERVICE }}
