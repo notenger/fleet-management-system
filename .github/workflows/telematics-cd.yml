@@ -56,6 +56,7 @@ jobs:
           echo $ECR_REPOSITORY
           echo $ECR_REPOSITORY
           echo $IMAGE_TAG
+          echo ${{ secrets.ECS_CLUSTER }}
 
           mvn -ntp -B verify -pl telematics -am \
             -Ddocker.image.registry=$ECR_REGISTRY_FULL_NAME \
@@ -74,7 +75,6 @@ jobs:
           image: ${{ steps.build-image.outputs.image }}
 
       - name: Deploy Amazon ECS task definition
-        run: echo ${{ secrets.ECS_CLUSTER }}
         uses: aws-actions/amazon-ecs-deploy-task-definition@df9643053eda01f169e64a0e60233aacca83799a
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
