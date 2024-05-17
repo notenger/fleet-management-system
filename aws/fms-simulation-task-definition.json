@@ -15,12 +15,6 @@
                 }
             ],
             "essential": true,
-            "environment": [
-                {
-                    "name": "SPRING_PROFILES_ACTIVE",
-                    "value": "aws"
-                }
-            ],
             "mountPoints": [],
             "volumesFrom": [],
             "systemControls": []
