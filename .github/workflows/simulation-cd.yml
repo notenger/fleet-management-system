@@ -20,8 +20,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-
+#      - uses: actions/checkout@v3
+#
 #      - name: Configure AWS credentials for ECR
 #        uses: aws-actions/configure-aws-credentials@0e613a0980cbf65ed5b322eb7a1e075d28913a83
 #        with:
@@ -38,7 +38,7 @@ jobs:
 #      - name: Set build number
 #        id: build-number
 #        run: echo "BUILD_NUMBER=$(date '+%d.%m.%Y.%H.%M.%S')" >> $GITHUB_OUTPUT
-
+#
 #      - name: Login to Amazon ECR
 #        id: login-ecr
 #        uses: aws-actions/amazon-ecr-login@v2.0.1
@@ -60,44 +60,26 @@ jobs:
 #            jib:build
 #          echo "image=$ECR_REGISTRY/$ECR_REGISTRY_ALIAS/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
 #
-      - name: Fill in the new image ID in the Amazon ECS task definition
+      - name: Fill in the new image ID and secret variables in the Amazon ECS task definition
         id: task-def
         uses: aws-actions/amazon-ecs-render-task-definition@c804dfbdd57f713b6c079302a4c01db7017a36fc
         with:
           task-definition: ${{ env.ECS_TASK_DEFINITION }}
           container-name: ${{ env.CONTAINER_NAME }}
-#          image: ${{ steps.build-image.outputs.image }}
-          image: "newimage"
+          image: ${{ steps.build-image.outputs.image }}
           environment-variables: |
-            ENVIRONMENT=prod
-
-#      - name: Add environment variables to Amazon ECS task definition
-#        id: add-env-var
-#        uses: cvmaker-bv/amazon-ecs-task-environment@v1
-#        env:
-#          SPRING_RABBITMQ_PASSWORD: strongpassword
-##          SPRING_RABBITMQ_USER: user
-#        with:
-#          task-definition: ${{ env.ECS_TASK_DEFINITION }}
-##          ${{ steps.task-def.outputs.task-definition }}
-#          container-name: ${{ env.CONTAINER_NAME }}
-#          env-variables: ${{ toJson(env) }}
+            SPRING_RABBITMQ_PASSWORD=${{ secrets.AWS_MQ_PASSWORD }}
 
       - name: Print the task
-        env:
-          SPRING_RABBITMQ_PASSWORD: strongpassword
-          SPRING_RABBITMQ_USER: user
         run: |
-          cat ${{ env.ECS_TASK_DEFINITION }}
           cat ${{ steps.task-def.outputs.task-definition }}
-#          echo toJson(env)
 
-#      - name: Configure AWS credentials for ECS
-#        uses: aws-actions/configure-aws-credentials@0e613a0980cbf65ed5b322eb7a1e075d28913a83
-#        with:
+      - name: Configure AWS credentials for ECS
+        uses: aws-actions/configure-aws-credentials@0e613a0980cbf65ed5b322eb7a1e075d28913a83
+        with:
 #          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
 #          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#          aws-region: ${{ secrets.AWS_REGION }}
+          aws-region: ${{ secrets.AWS_REGION }}
 #
 #      - name: Deploy Amazon ECS task definition
 #        uses: aws-actions/amazon-ecs-deploy-task-definition@v1.5.0

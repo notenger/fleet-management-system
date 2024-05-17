@@ -16,8 +16,12 @@
             ],
             "environment": [
                 {
-                    "name": "ENVIRONMENT",
-                    "value": "test"
+                    "name": "SPRING_PROFILES_ACTIVE",
+                    "value": "aws"
+                },
+                {
+                    "name": "SPRING_RABBITMQ_PASSWORD",
+                    "value": "<>"
                 }
             ],
             "essential": true,
