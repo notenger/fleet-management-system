@@ -38,16 +38,11 @@ jobs:
         id: build-number
         run: echo "BUILD_NUMBER=$(date '+%d.%m.%Y.%H.%M.%S')" >> $GITHUB_OUTPUT
 
-      - name: Login to ECR
-        uses: docker/login-action@v2
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2.0.1
         with:
-          registry: public.ecr.aws/b2y2j9p6/telematics
-
-#      - name: Login to Amazon ECR
-#        id: login-ecr
-#        uses: aws-actions/amazon-ecr-login@v2.0.1
-#        with:
-#          registry-type: public
+          registry-type: public
 
       - name: Build, tag, and push image to Amazon ECR
         id: build-image
@@ -57,7 +52,8 @@ jobs:
           ECR_REGISTRY_FULL_NAME: ${ECR_REGISTRY}/${ECR_REGISTRY_ALIAS}
           IMAGE_TAG: ${{ steps.build-number.outputs.BUILD_NUMBER }}
         run: |
-          echo $ECR_REGISTRY
+          echo ECR_REGISTRY_FULL_NAME
+          echo $ECR_REPOSITORY
           echo $ECR_REPOSITORY
           echo $IMAGE_TAG
 
@@ -78,6 +74,7 @@ jobs:
           image: ${{ steps.build-image.outputs.image }}
 
       - name: Deploy Amazon ECS task definition
+        run: echo ${{ secrets.ECS_CLUSTER }}
         uses: aws-actions/amazon-ecs-deploy-task-definition@df9643053eda01f169e64a0e60233aacca83799a
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
