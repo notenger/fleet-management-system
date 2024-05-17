@@ -12,7 +12,7 @@ export default function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="openid/callback" element={<AuthCallback />} />
+        <Route path="/openid/callback" element={<AuthCallback />} />
         <Route
           element={
             <ProtectedRoute>
@@ -20,8 +20,8 @@ export default function App() {
             </ProtectedRoute>
           }
         >
-          <Route path="map" element={<GISMap />} />
-          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="/map" element={<GISMap />} />
+          <Route path="/dashboard" element={<Dashboard />} />
         </Route>
       </Routes>
     </Router>
