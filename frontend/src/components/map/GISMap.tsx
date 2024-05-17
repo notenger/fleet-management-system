@@ -41,7 +41,7 @@ const landmarkIcon = new Icon({
   iconSize: [38, 38],
 });
 
-const SOCKET_URL = `${process.env.REACT_APP_API_GATEWAY_URL}/ws-message`;
+const SOCKET_URL = `${process.env.REACT_APP_WEBSOCKET_URL}/ws-message`;
 
 function GISMap() {
   const [landmarks, setLandmarks] = useState([]);
