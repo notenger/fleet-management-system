@@ -68,19 +68,20 @@ jobs:
           container-name: ${{ env.CONTAINER_NAME }}
 #          image: ${{ steps.build-image.outputs.image }}
           image: "newimage"
-#          environment-variables: "LOG_LEVEL=info"
+          environment-variables: |
+            ENVIRONMENT=prod
 
-      - name: Add environment variables to Amazon ECS task definition
-        id: add-env-var
-        uses: cvmaker-bv/amazon-ecs-task-environment@v1
-        env:
-          SPRING_RABBITMQ_PASSWORD: strongpassword
-#          SPRING_RABBITMQ_USER: user
-        with:
-          task-definition: ${{ env.ECS_TASK_DEFINITION }}
-#          ${{ steps.task-def.outputs.task-definition }}
-          container-name: ${{ env.CONTAINER_NAME }}
-          env-variables: ${{ toJson(env) }}
+#      - name: Add environment variables to Amazon ECS task definition
+#        id: add-env-var
+#        uses: cvmaker-bv/amazon-ecs-task-environment@v1
+#        env:
+#          SPRING_RABBITMQ_PASSWORD: strongpassword
+##          SPRING_RABBITMQ_USER: user
+#        with:
+#          task-definition: ${{ env.ECS_TASK_DEFINITION }}
+##          ${{ steps.task-def.outputs.task-definition }}
+#          container-name: ${{ env.CONTAINER_NAME }}
+#          env-variables: ${{ toJson(env) }}
 
       - name: Print the task
         env:
@@ -88,6 +89,7 @@ jobs:
           SPRING_RABBITMQ_USER: user
         run: |
           cat ${{ env.ECS_TASK_DEFINITION }}
+          cat ${{ steps.task-def.outputs.task-definition }}
 #          echo toJson(env)
 
 #      - name: Configure AWS credentials for ECS
