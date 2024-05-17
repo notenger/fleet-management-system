@@ -60,19 +60,22 @@ jobs:
 #            jib:build
 #          echo "image=$ECR_REGISTRY/$ECR_REGISTRY_ALIAS/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
 #
-#      - name: Fill in the new image ID in the Amazon ECS task definition
-#        id: task-def
-#        uses: aws-actions/amazon-ecs-render-task-definition@c804dfbdd57f713b6c079302a4c01db7017a36fc
-#        with:
-#          task-definition: ${{ env.ECS_TASK_DEFINITION }}
-#          container-name: ${{ env.CONTAINER_NAME }}
+      - name: Fill in the new image ID in the Amazon ECS task definition
+        id: task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@c804dfbdd57f713b6c079302a4c01db7017a36fc
+        with:
+          task-definition: ${{ env.ECS_TASK_DEFINITION }}
+          container-name: ${{ env.CONTAINER_NAME }}
 #          image: ${{ steps.build-image.outputs.image }}
+          image: "newimage"
+          environment-variables: "LOG_LEVEL=info"
 
       - name: Add environment variables to Amazon ECS task definition
         id: add-env-var
         uses: cvmaker-bv/amazon-ecs-task-environment@v1
         env:
           SPRING_RABBITMQ_PASSWORD: strongpassword
+          SPRING_RABBITMQ_USER: user
         with:
           task-definition: ${{ env.ECS_TASK_DEFINITION }}
 #          ${{ steps.task-def.outputs.task-definition }}
@@ -80,7 +83,12 @@ jobs:
           env-variables: ${{ toJson(env) }}
 
       - name: Print the task
-        run: cat ${{ env.ECS_TASK_DEFINITION }}
+        env:
+          SPRING_RABBITMQ_PASSWORD: strongpassword
+          SPRING_RABBITMQ_USER: user
+        run: |
+          cat ${{ env.ECS_TASK_DEFINITION }}
+          echo toJson(env)
 
 #      - name: Configure AWS credentials for ECS
 #        uses: aws-actions/configure-aws-credentials@0e613a0980cbf65ed5b322eb7a1e075d28913a83
