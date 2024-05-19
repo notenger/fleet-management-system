@@ -62,7 +62,14 @@ public class RabbitMQConfig {
 
     @Bean
     public Queue queue() throws Exception {
-        return admin().declareQueue();
+        if (admin() != null) {
+            try {
+                return admin().declareQueue();
+            } catch (Exception e) {
+                System.err.println("Failed to declare Queue: " + e.getMessage());
+            }
+        }
+        return null; 
     }
 
     @Bean

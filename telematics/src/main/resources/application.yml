@@ -20,8 +20,8 @@ spring:
       password: password
   rabbitmq:
     username: notenger
-    host: b-06ec40b5-3776-41d0-b937-9db8ab61e3b2.mq.eu-central-1.amazonaws.com
-    port: 5671
+    host: localhost
+    port: 5672
   profiles:
     active: default
 
