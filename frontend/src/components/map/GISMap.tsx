@@ -42,7 +42,6 @@ const landmarkIcon = new Icon({
 });
 
 const SOCKET_URL = `${process.env.REACT_APP_WEBSOCKET_URL}/ws-message`;
-// const SOCKET_URL = `http://localhost:8082/ws-message`;
 
 function GISMap() {
   const [landmarks, setLandmarks] = useState([]);
@@ -89,7 +88,6 @@ function GISMap() {
   };
 
   const onMessageReceived = (message) => {
-    console.log("Message:", message);
     if (firstMessageReceived === false) {
       console.log("Message:", message);
       setFirstMessageReceived(true);

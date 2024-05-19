@@ -69,7 +69,7 @@ public class RabbitMQConfig {
                 System.err.println("Failed to declare Queue: " + e.getMessage());
             }
         }
-        return null; 
+        return null;
     }
 
     @Bean

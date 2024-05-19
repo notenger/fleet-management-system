@@ -44,7 +44,7 @@ public class TelematicsService {
         outdated.forEach(mongoTemplate::remove);
     }
 
-//    @Scheduled(fixedRate = 1_000)
+    @Scheduled(fixedRate = 1_000)
     private void pushAggregatedData() {
         discardOutdatedRecords();
         TelemetryDTO telemetryDTO = getDeviceTelemetrySummary();
