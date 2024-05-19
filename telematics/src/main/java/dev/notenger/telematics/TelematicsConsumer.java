@@ -12,7 +12,7 @@ public class TelematicsConsumer {
 
     private final TelematicsService telematicsService;
 
-    @RabbitListener(queues = "${rabbitmq.queues.telematics}") // , containerFactory = "rabbitListenerContainerFactory"
+    @RabbitListener(queues = "${rabbitmq.queues.telematics}")
     public void consumer(Telemetry telemetry) {
         telematicsService.send(telemetry);
     }

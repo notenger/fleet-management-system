@@ -14,7 +14,8 @@ spring:
     name: simulation
   rabbitmq:
     username: notenger
-    addresses: b-06ec40b5-3776-41d0-b937-9db8ab61e3b2.mq.eu-central-1.amazonaws.com:5671
+    host: b-06ec40b5-3776-41d0-b937-9db8ab61e3b2.mq.eu-central-1.amazonaws.com
+    port: 5671
 
 eureka:
   client:

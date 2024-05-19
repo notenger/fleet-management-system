@@ -13,7 +13,9 @@ spring:
   application:
     name: simulation
   rabbitmq:
-    addresses: localhost:5672
+    username: notenger
+    host: b-06ec40b5-3776-41d0-b937-9db8ab61e3b2.mq.eu-central-1.amazonaws.com
+    port: 5671
   profiles:
     active: default
 
