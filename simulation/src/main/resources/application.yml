@@ -13,9 +13,10 @@ spring:
   application:
     name: simulation
   rabbitmq:
-    username: notenger
     host: localhost
     port: 5672
+    ssl:
+      enabled: false
   profiles:
     active: default
 

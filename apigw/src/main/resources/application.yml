@@ -9,7 +9,7 @@ cors:
 
 spring:
   application:
-        name: api-gateway
+    name: api-gateway
   cloud:
       gateway:
         default-filters:

@@ -19,7 +19,10 @@ spring:
       username: notenger
       password: password
   rabbitmq:
-    addresses: rabbitmq:5672
+    host: rabbitmq
+    port: 5672
+    ssl:
+      enabled: false
 
 rabbitmq:
   exchanges:

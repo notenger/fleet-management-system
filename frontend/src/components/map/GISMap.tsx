@@ -87,29 +87,22 @@ function GISMap() {
     }
   };
 
-  const onMessageReceived = (message) => {
+  const onMessageReceived = (message: any) => {
     if (firstMessageReceived === false) {
       console.log("Message:", message);
       setFirstMessageReceived(true);
     }
-
-    const vehicle = vehicles.find((veh) => veh.deviceId === message.deviceId);
-
-    if (vehicle) {
-      const updatedVehicles = vehicles.map((veh) =>
-        veh.deviceId === message.deviceId
-          ? {
-              ...veh,
-              latitude: message.latitude,
-              longitude: message.longitude,
-              heading: message.heading,
-              pathData: message.pathData,
-            }
-          : veh
-      );
-
-      setVehicles(updatedVehicles);
-    }
+    setVehicles((prevVehicles) =>
+      prevVehicles.map((vehicle) => {
+        if (vehicle.deviceId === message.deviceId) {
+          return {
+            ...vehicle,
+            telemetry: message,
+          };
+        }
+        return vehicle;
+      })
+    );
   };
 
   const pickVehicleIcon = (vehicleId) => {
@@ -128,9 +121,9 @@ function GISMap() {
           maxZoom={20}
           subdomains={["mt0", "mt1", "mt2", "mt3"]}
         />
-        {selectedVehicle && selectedVehicle.pathData && (
+        {selectedVehicle && selectedVehicle.telemetry && (
           <Polyline
-            positions={selectedVehicle.pathData}
+            positions={selectedVehicle.telemetry.pathData}
             pathOptions={{ color: "red", dashArray: [10, 10] }}
           />
         )}
@@ -150,19 +143,17 @@ function GISMap() {
           </Marker>
         ))}
         {vehicles.map((vehicle) => {
-          if (
-            vehicle &&
-            vehicle.latitude &&
-            vehicle.longitude &&
-            vehicle.heading
-          ) {
+          if (vehicle && vehicle.telemetry) {
             return (
               <RotatedMarker
                 key={vehicle.id}
-                position={[vehicle.latitude, vehicle.longitude]}
+                position={[
+                  vehicle.telemetry.latitude,
+                  vehicle.telemetry.longitude,
+                ]}
                 icon={pickVehicleIcon(vehicle.id)}
                 rotationOrigin="center"
-                rotationAngle={vehicle.heading * (180 / Math.PI)}
+                rotationAngle={vehicle.telemetry.heading * (180 / Math.PI)}
                 data={vehicle.id}
                 eventHandlers={{
                   click: (e) => {

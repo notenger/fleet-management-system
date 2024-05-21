@@ -30,6 +30,9 @@ public class RabbitMQConfig {
     @Value("${spring.rabbitmq.password:guest}")
     private String password;
 
+    @Value("${spring.rabbitmq.ssl.enabled}")
+    private Boolean sslEnabled;
+
     @Bean
     public CachingConnectionFactory connectionFactory() throws Exception {
         ConnectionFactory factory = new ConnectionFactory();
@@ -37,7 +40,7 @@ public class RabbitMQConfig {
         factory.setPort(port);
         factory.setUsername(username);
         factory.setPassword(password);
-        factory.useSslProtocol();
+        if (sslEnabled) factory.useSslProtocol();
         return new CachingConnectionFactory(factory);
     }
 
