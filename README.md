@@ -19,7 +19,7 @@ The project can be easily configured to run in various environments using Spring
 
 Architecture diagram of the AWS deployment:
 
-![[fms-aws.drawio (2) 1.png]]
+![fms-aws drawio (2)](https://github.com/notenger/fleet-management-system/assets/116970623/11d4f0f9-9665-4cd7-a7c6-8a7863f3ff3e)
 
 For the `default` and `docker` profiles, the implementation of infrastructure services is independent of AWS as a provider:
 
