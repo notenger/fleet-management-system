@@ -2,11 +2,11 @@ name: CD - Deploy Eureka-Server Service
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-    paths:
-      - eureka-server/**
+#  push:
+#    branches:
+#      - main
+#    paths:
+#      - eureka-server/**
 
 env:
   MODULE_NAME: eureka-server

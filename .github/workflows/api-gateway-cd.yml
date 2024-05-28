@@ -2,11 +2,11 @@ name: CD - Deploy Api-Gateway Service
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-    paths:
-      - apigw/**
+#  push:
+#    branches:
+#      - main
+#    paths:
+#      - apigw/**
 
 env:
   MODULE_NAME: apigw
