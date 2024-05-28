@@ -21,7 +21,18 @@ spec:
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: kube
-      restartPolicy: Always
+          livenessProbe:
+            httpGet:
+              path: /ping
+              port: 8082
+            initialDelaySeconds: 60
+            periodSeconds: 20
+          readinessProbe:
+            httpGet:
+              path: /ping
+              port: 8082
+            initialDelaySeconds: 60
+            periodSeconds: 20
   selector:
     matchLabels:
       app: telematics

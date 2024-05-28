@@ -29,7 +29,6 @@ public class DeviceService {
                 .averageSpeed(averageSpeed)
                 .build();
         simulationClient.addDeviceAgent(device);
-
     }
 
     public void attachDevice(Integer deviceId, String placeName) {

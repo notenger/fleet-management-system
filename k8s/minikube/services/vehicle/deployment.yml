@@ -13,15 +13,26 @@ spec:
         app: vehicle
     spec:
       containers:
-        - name: vehicle
-          image: notenger/vehicle:latest
+        - name: apigw
+          image: notenger/apigw:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: kube
-      restartPolicy: Always
+          livenessProbe:
+            httpGet:
+              path: /ping
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 20
+          readinessProbe:
+            httpGet:
+              path: /ping
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 20
   selector:
     matchLabels:
       app: vehicle

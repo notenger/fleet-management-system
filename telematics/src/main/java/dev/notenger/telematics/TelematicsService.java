@@ -32,10 +32,10 @@ public class TelematicsService {
     }
 
     private void discardOutdatedRecords() {
-        final int MAX_AGE = 2;
+        final int TTL = 2;
         List<Telemetry> telemetryList = mongoTemplate.findAll(Telemetry.class);
         Predicate<Telemetry> isOutdated = telemetry ->
-                ChronoUnit.SECONDS.between(telemetry.getTimestamp(), LocalDateTime.now()) > MAX_AGE;
+                ChronoUnit.SECONDS.between(telemetry.getTimestamp(), LocalDateTime.now()) > TTL;
         List<Telemetry> outdated = telemetryList
                 .stream()
                 .filter(isOutdated)

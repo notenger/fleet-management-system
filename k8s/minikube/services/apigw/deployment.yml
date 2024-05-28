@@ -1,38 +1,37 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: simulation
+  name: apigw
   labels:
-    app: simulation
+    app: apigw
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: apigw
   template:
     metadata:
-      name: simulation
       labels:
-        app: simulation
+        app: apigw
     spec:
       containers:
-        - name: simulation
-          image: notenger/simulation:latest
+        - name: apigw
+          image: notenger/apigw:latest
           imagePullPolicy: Always
           ports:
-            - containerPort: 8081
+            - containerPort: 9090
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: kube
           livenessProbe:
             httpGet:
               path: /ping
-              port: 8081
+              port: 9090
             initialDelaySeconds: 60
             periodSeconds: 20
           readinessProbe:
             httpGet:
               path: /ping
-              port: 8081
+              port: 9090
             initialDelaySeconds: 60
             periodSeconds: 20
-  selector:
-    matchLabels:
-      app: simulation

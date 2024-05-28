@@ -38,28 +38,6 @@ services:
     networks:
       - spring
 
-  eureka-server:
-    image: notenger/eureka-server:latest
-    container_name: eureka-server
-    ports:
-      - "8761:8761"
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-    networks:
-      - spring
-
-  apigw:
-    image: notenger/apigw:latest
-    container_name: apigw
-    ports:
-      - "8083:8083"
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-    networks:
-      - spring
-    depends_on:
-      - eureka-server
-
   keycloak:
     image: quay.io/keycloak/keycloak:22.0.4
     command:
@@ -74,8 +52,30 @@ services:
     volumes:
       - ./keycloak-config/:/opt/keycloak/data/import/
 
+  eureka-server:
+    image: notenger/eureka-server:latest
+    container_name: eureka-server
+    ports:
+      - "8761:8761"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring
+
+  apigw:
+    image: notenger/apigw:latest
+    container_name: apigw
+    ports:
+      - "9090:9090"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring
+    depends_on:
+      - eureka-server
+
   vehicle:
-    image: notenger/vehicle:latest
+    image: public.ecr.aws/b2y2j9p6/vehicle:17.05.2024.08.05.41
     container_name: vehicle
     ports:
       - "8080:8080"
@@ -88,7 +88,7 @@ services:
       - postgres
 
   simulation:
-    image: notenger/simulation:latest
+    image: public.ecr.aws/b2y2j9p6/simulation:19.05.2024.16.10.53
     container_name: simulation
     ports:
       - "8081:8081"
@@ -101,7 +101,7 @@ services:
       - rabbitmq
 
   telematics:
-    image: notenger/telematics:latest
+    image: public.ecr.aws/b2y2j9p6/telematics:19.05.2024.16.33.37
     container_name: telematics
     ports:
       - "8082:8082"

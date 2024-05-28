@@ -22,14 +22,15 @@ public class SimulationConfig implements SimulationCallback {
         final SimulationClient client = new SimulationClient();
         client.setCallback(this);
         client.setSensorCollectionFrequency(100L);
+
         IExperimentHost host = new ExperimentHost(client);
         client.setup(host);
         host.launch();
-
         if (client.getState() == Experiment.IDLE) {
             client.run();
         }
         host.setPresentable(client.getEngine().getRoot());
+
         return client;
     }
 

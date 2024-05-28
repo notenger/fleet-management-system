@@ -30,7 +30,7 @@ jobs:
       - uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
-          java-version: '18'
+          java-version: '21'
           cache: 'maven'
       - name: Build and run Unit/Integration Tests with Maven
         run: mvn -ntp -B verify -pl vehicle -am

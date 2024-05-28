@@ -1,4 +1,4 @@
-name: CD - Deploy Eureka-Server Service
+name: CD - Deploy Api-Gateway Service
 
 on:
   workflow_dispatch:
@@ -6,12 +6,12 @@ on:
     branches:
       - main
     paths:
-      - eureka-server/**
+      - apigw/**
 
 env:
-  MODULE_NAME: eureka-server
+  MODULE_NAME: apigw
   DOCKERHUB_REGISTRY: notenger
-  DOCKERHUB_REPOSITORY: eureka-server
+  DOCKERHUB_REPOSITORY: apigw
 
 jobs:
   deploy:
