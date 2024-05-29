@@ -104,7 +104,7 @@ jobs:
           ECR_REGISTRY_FULL_NAME: ${ECR_REGISTRY}/${ECR_REGISTRY_ALIAS}
           IMAGE_TAG: ${{ steps.build-number.outputs.BUILD_NUMBER }}
         run: |
-          sed -i -E "s_(${$ECR_REGISTRY_FULL_NAME}/${$ECR_REPOSITORY}:)([^\"']*)_\1${IMAGE_TAG}_" docker-compose.yml
+          sed -i -E "s_(${ECR_REGISTRY_FULL_NAME}/${ECR_REPOSITORY}:)([^\"']*)_\1${IMAGE_TAG}_" docker-compose.yml
 
       - name: Commit and push docker-compose.yml
         env:
