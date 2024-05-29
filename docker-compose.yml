@@ -105,7 +105,6 @@ services:
     container_name: telematics
     ports:
       - "8082:8082"
-      - "27017:27017"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
     networks:
