@@ -75,7 +75,7 @@ services:
       - eureka-server
 
   vehicle:
-    image: public.ecr.aws/b2y2j9p6/vehicle:17.05.2024.08.05.41
+    image: public.ecr.aws/b2y2j9p6/vehicle:29.05.2024.11.51.00
     container_name: vehicle
     ports:
       - "8080:8080"
