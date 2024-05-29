@@ -69,7 +69,17 @@ function GISMap() {
         console.log("Successfully fetched vehicles");
       })
       .catch((err) => {
-        console.log("Error trying fetch vehicles:", err);
+        console.log("Error trying fetch vehicles...");
+        if (err.response) {
+          console.log("Error response data:", err.response.data);
+          console.log("Error response status:", err.response.status);
+          console.log("Error response headers:", err.response.headers);
+        } else if (err.request) {
+          console.log("Error request:", err.request);
+        } else {
+          console.log("Error message:", err.message);
+        }
+        console.log("Error config:", err.config);
       })
       .finally(() => {});
   };

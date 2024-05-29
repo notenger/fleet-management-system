@@ -51,6 +51,8 @@ services:
       KEYCLOAK_ADMIN_PASSWORD: admin
     volumes:
       - ./keycloak-config/:/opt/keycloak/data/import/
+    networks:
+      - spring
 
   eureka-server:
     image: notenger/eureka-server:28.05.2024.13.22.13
@@ -69,10 +71,12 @@ services:
       - "9090:9090"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI=https://cognito-idp.eu-central-1.amazonaws.com/eu-central-1_mRlYi1e69
     networks:
       - spring
     depends_on:
       - eureka-server
+      - keycloak
 
   vehicle:
     image: public.ecr.aws/b2y2j9p6/vehicle:29.05.2024.11.51.00
@@ -81,6 +85,7 @@ services:
       - "8080:8080"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
+      - CLIENTS_DEVICE_URL=http://simulation:8081
     networks:
       - spring
       - postgres

@@ -87,9 +87,12 @@ jobs:
 
       - name: Fill in the new image ID in the docker-compose file
         env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REGISTRY_ALIAS: b2y2j9p6
           IMAGE_TAG: ${{ steps.build-number.outputs.BUILD_NUMBER }}
         run: |
-          sed -i -E 's_(public.ecr.aws/b2y2j9p6/telematics:)([^"]*)_\1'$IMAGE_TAG'_' docker-compose.yml
+          ECR_REGISTRY_FULL_NAME=${ECR_REGISTRY}/${ECR_REGISTRY_ALIAS}
+          sed -i -E "s_(${ECR_REGISTRY_FULL_NAME}/${ECR_REPOSITORY}:)([^\"']*)_\1${IMAGE_TAG}_" docker-compose.yml
 
       - name: Commit and push docker-compose.yml
         env:

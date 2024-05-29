@@ -33,7 +33,6 @@ spring:
             uri: lb://TELEMATICS
             predicates:
               - Path=/api/v1/telemetry/**, /ws-message/**
-
   security:
     oauth2:
       resourceserver:

@@ -13,7 +13,7 @@ spring:
   cloud:
     gateway:
       default-filters:
-        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_UNIQUE
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_LAST
       globalcors:
         corsConfigurations:
           '[/**]':
@@ -29,6 +29,10 @@ spring:
           uri: lb://SIMULATION
           predicates:
             - Path=/api/v1/places/**, /api/v1/devices/**
+        - id: telematics
+          uri: lb://TELEMATICS
+          predicates:
+            - Path=/api/v1/telemetry/**, /ws-message/**
   security:
     oauth2:
       resourceserver:
