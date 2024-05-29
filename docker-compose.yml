@@ -75,7 +75,7 @@ services:
       - eureka-server
 
   vehicle:
-    image: public.ecr.aws/b2y2j9p6/vehicle:17.05.2024.08.05.41
+    image: public.ecr.aws/b2y2j9p6/vehicle:29.05.2024.11.51.00
     container_name: vehicle
     ports:
       - "8080:8080"
@@ -101,7 +101,7 @@ services:
       - rabbitmq
 
   telematics:
-    image: public.ecr.aws/b2y2j9p6/telematics:19.05.2024.16.33.37
+    image: public.ecr.aws/b2y2j9p6/telematics:29.05.2024.11.54.22
     container_name: telematics
     ports:
       - "8082:8082"
