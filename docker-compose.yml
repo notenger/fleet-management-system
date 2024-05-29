@@ -101,7 +101,7 @@ services:
       - rabbitmq
 
   telematics:
-    image: public.ecr.aws/b2y2j9p6/telematics:19.05.2024.16.33.37
+    image: public.ecr.aws/b2y2j9p6/telematics:29.05.2024.11.54.22
     container_name: telematics
     ports:
       - "8082:8082"
