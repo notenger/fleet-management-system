@@ -91,7 +91,6 @@ jobs:
           ECR_REGISTRY_ALIAS: b2y2j9p6
           IMAGE_TAG: ${{ steps.build-number.outputs.BUILD_NUMBER }}
         run: |
-#          sed -i -E 's_(public.ecr.aws/b2y2j9p6/simulation:)([^"]*)_\1'$IMAGE_TAG'_' docker-compose.yml
           ECR_REGISTRY_FULL_NAME=${ECR_REGISTRY}/${ECR_REGISTRY_ALIAS}
           sed -i -E "s_(${ECR_REGISTRY_FULL_NAME}/${ECR_REPOSITORY}:)([^\"']*)_\1${IMAGE_TAG}_" docker-compose.yml
 
