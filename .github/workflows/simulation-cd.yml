@@ -77,8 +77,8 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: check task
-        run: echo ${{ steps.task-def.outputs.task-definition }}
+      - name: Check task
+        run: cat ${{ steps.task-def.outputs.task-definition }}
 
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1.5.0
