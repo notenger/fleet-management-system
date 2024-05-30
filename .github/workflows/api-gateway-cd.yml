@@ -52,7 +52,7 @@ jobs:
         env:
           IMAGE_TAG: ${{ steps.build-number.outputs.BUILD_NUMBER }}
         run: |
-          sed -i -E "s_(${DOCKERHUB_REGISTRY}/${DOCKERHUB_REPOSITORY}:)([^\"']*)_\1${IMAGE_TAG}_" docker-compose.yml ${env.KUBERNETES_DEPLOYMENT}
+          sed -i -E "s_(${DOCKERHUB_REGISTRY}/${DOCKERHUB_REPOSITORY}:)([^\"']*)_\1${IMAGE_TAG}_" docker-compose.yml ${KUBERNETES_DEPLOYMENT}
 
       - name: Commit and push docker-compose.yml
         env:
