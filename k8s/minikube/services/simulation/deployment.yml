@@ -15,7 +15,7 @@ spec:
       hostname: simulation
       containers:
         - name: simulation
-          image: public.ecr.aws/b2y2j9p6/simulation:29.05.2024.12.30.04
+          image: public.ecr.aws/b2y2j9p6/simulation:30.05.2024.08.59.13
           imagePullPolicy: Always
           ports:
             - containerPort: 8081
