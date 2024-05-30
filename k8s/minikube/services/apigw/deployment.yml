@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: apigw
-          image: notenger/apigw:30.05.2024.12.16.32
+          image: notenger/apigw:30.05.2024.12.32.32
           imagePullPolicy: Always
           ports:
             - containerPort: 9090
