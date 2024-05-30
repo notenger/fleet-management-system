@@ -18,7 +18,7 @@ public class WebSecurityConfig {
 				.csrf().disable()
 				.authorizeExchange()
 				.pathMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-				.pathMatchers("/ws-message/**").permitAll()
+				.pathMatchers("/ws-api/**").permitAll()
 				.anyExchange().authenticated()
 				.and()
 				.securityContextRepository(NoOpServerSecurityContextRepository.getInstance())

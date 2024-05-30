@@ -1,35 +1,35 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: mongodb
+  name: mongo
   labels:
-    app: mongodb
+    app: mongo
 spec:
-  serviceName: mongodb
+  serviceName: mongo
   replicas: 1
   selector:
     matchLabels:
-      app: mongodb
+      app: mongo
   template:
     metadata:
-      name: mongodb
+      name: mongo
       labels:
-        app: mongodb
+        app: mongo
     spec:
       volumes:
-        - name: mongodb
+        - name: mongo
           persistentVolumeClaim:
-            claimName: mongodb-pc-volume-claim
+            claimName: mongo-pc-volume-claim
       containers:
-        - name: mongodb
+        - name: mongo
           image: mongo:latest
           imagePullPolicy: Always
           volumeMounts:
             - mountPath: "/data/db"
-              name: mongodb
+              name: mongo
           envFrom:
             - configMapRef:
-                name: mongodb-config
+                name: mongo-config
           resources:
             requests:
               cpu: 100m

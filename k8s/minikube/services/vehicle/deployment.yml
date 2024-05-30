@@ -12,9 +12,10 @@ spec:
       labels:
         app: vehicle
     spec:
+      hostname: vehicle
       containers:
-        - name: apigw
-          image: notenger/apigw:latest
+        - name: vehicle
+          image: public.ecr.aws/b2y2j9p6/vehicle:29.05.2024.11.51.00
           imagePullPolicy: Always
           ports:
             - containerPort: 8080

@@ -12,7 +12,7 @@ import { useOutletContext } from "react-router-dom";
 import { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons";
 import Copyright from "../shared/Copyright";
 
-const SOCKET_URL = `${process.env.REACT_APP_WEBSOCKET_URL}/ws-message`;
+const SOCKET_URL = `${process.env.REACT_APP_WEBSOCKET_URL}/ws-api`;
 
 function Dashboard() {
   const [telemetry, setTelemetry] = useState({

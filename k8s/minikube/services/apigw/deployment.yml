@@ -16,22 +16,12 @@ spec:
     spec:
       containers:
         - name: apigw
-          image: notenger/apigw:latest
+          image: notenger/apigw:29.05.2024.13.47.45
           imagePullPolicy: Always
           ports:
             - containerPort: 9090
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: kube
-          livenessProbe:
-            httpGet:
-              path: /ping
-              port: 9090
-            initialDelaySeconds: 60
-            periodSeconds: 20
-          readinessProbe:
-            httpGet:
-              path: /ping
-              port: 9090
-            initialDelaySeconds: 60
-            periodSeconds: 20
+            - name: SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI
+              value: https://cognito-idp.eu-central-1.amazonaws.com/eu-central-1_mRlYi1e69

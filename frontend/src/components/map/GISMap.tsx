@@ -41,7 +41,7 @@ const landmarkIcon = new Icon({
   iconSize: [38, 38],
 });
 
-const SOCKET_URL = `${process.env.REACT_APP_WEBSOCKET_URL}/ws-message`;
+const SOCKET_URL = `${process.env.REACT_APP_WEBSOCKET_URL}/ws-api`;
 
 function GISMap() {
   const [landmarks, setLandmarks] = useState([]);
@@ -69,17 +69,7 @@ function GISMap() {
         console.log("Successfully fetched vehicles");
       })
       .catch((err) => {
-        console.log("Error trying fetch vehicles...");
-        if (err.response) {
-          console.log("Error response data:", err.response.data);
-          console.log("Error response status:", err.response.status);
-          console.log("Error response headers:", err.response.headers);
-        } else if (err.request) {
-          console.log("Error request:", err.request);
-        } else {
-          console.log("Error message:", err.message);
-        }
-        console.log("Error config:", err.config);
+        console.log("Error trying fetch vehicles:", err);
       })
       .finally(() => {});
   };

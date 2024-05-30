@@ -12,9 +12,10 @@ spec:
       labels:
         app: telematics
     spec:
+      hostname: telematics
       containers:
         - name: telematics
-          image: notenger/telematics:latest
+          image: public.ecr.aws/b2y2j9p6/telematics:29.05.2024.11.54.22
           imagePullPolicy: Always
           ports:
             - containerPort: 8082

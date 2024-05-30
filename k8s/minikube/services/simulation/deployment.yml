@@ -12,9 +12,10 @@ spec:
       labels:
         app: simulation
     spec:
+      hostname: simulation
       containers:
         - name: simulation
-          image: notenger/simulation:latest
+          image: public.ecr.aws/b2y2j9p6/simulation:29.05.2024.12.30.04
           imagePullPolicy: Always
           ports:
             - containerPort: 8081

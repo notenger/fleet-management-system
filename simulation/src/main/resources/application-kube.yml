@@ -20,4 +20,8 @@ spring:
 
 eureka:
   client:
-    enabled: false
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka
+    fetch-registry: true
+    register-with-eureka: true
+    enabled: true
