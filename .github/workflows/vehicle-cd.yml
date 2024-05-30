@@ -115,4 +115,5 @@ jobs:
           git pull --rebase
           git add docker-compose.yml
           git commit -m "Update docker-compose.yml docker image with new tag $IMAGE_TAG"
+          git pull --rebase
           git push
