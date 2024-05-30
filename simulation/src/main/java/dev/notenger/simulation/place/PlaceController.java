@@ -18,11 +18,13 @@ public class PlaceController {
 
     @PostMapping
     public void addPlace(@RequestBody AddPlaceRequest request) {
+        log.info("Add place request. Place's name is {}", request.name());
         placeService.addPlace(request.name(), request.latitude(), request.longitude());
     }
 
     @GetMapping
     public List<PlaceDTO> getPlaces() {
+        log.info("Requested all places");
         return placeService.getAllPlaces();
     }
 

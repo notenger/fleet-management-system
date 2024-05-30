@@ -12,6 +12,7 @@ env:
   MODULE_NAME: eureka-server
   DOCKERHUB_REGISTRY: notenger
   DOCKERHUB_REPOSITORY: eureka-server
+  KUBERNETES_DEPLOYMENT: k8s/minikube/services/eureka-server/deployment.yml
 
 jobs:
   deploy:
@@ -51,7 +52,7 @@ jobs:
         env:
           IMAGE_TAG: ${{ steps.build-number.outputs.BUILD_NUMBER }}
         run: |
-          sed -i -E "s_(${DOCKERHUB_REGISTRY}/${DOCKERHUB_REPOSITORY}:)([^\"']*)_\1${IMAGE_TAG}_" docker-compose.yml k8s/minikube/services/eureka-server/deployment.yml
+          sed -i -E "s_(${DOCKERHUB_REGISTRY}/${DOCKERHUB_REPOSITORY}:)([^\"']*)_\1${IMAGE_TAG}_" docker-compose.yml ${KUBERNETES_DEPLOYMENT}
 
       - name: Commit and push docker-compose.yml
         env:
@@ -59,7 +60,7 @@ jobs:
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git add docker-compose.yml k8s/minikube/services/apigw/deployment.yml
+          git add docker-compose.yml ${KUBERNETES_DEPLOYMENT}
           git commit -m "Update docker-compose.yml docker image with new tag $IMAGE_TAG"
           git pull --rebase
           git push

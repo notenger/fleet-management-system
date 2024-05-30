@@ -12,6 +12,7 @@ env:
   ECR_REPOSITORY: vehicle
   ECS_SERVICE: vehicle
   ECS_TASK_DEFINITION: aws/fms-vehicle-task-definition.json
+  KUBERNETES_DEPLOYMENT: k8s/minikube/services/vehicle/deployment.yml
   CONTAINER_NAME: vehicle
   MODULE_NAME: vehicle
 
@@ -104,7 +105,7 @@ jobs:
           IMAGE_TAG: ${{ steps.build-number.outputs.BUILD_NUMBER }}
         run: |
           ECR_REGISTRY_FULL_NAME=${ECR_REGISTRY}/${ECR_REGISTRY_ALIAS}
-          sed -i -E "s_(${ECR_REGISTRY_FULL_NAME}/${ECR_REPOSITORY}:)([^\"']*)_\1${IMAGE_TAG}_" docker-compose.yml k8s/minikube/services/vehicle/deployment.yml
+          sed -i -E "s_(${ECR_REGISTRY_FULL_NAME}/${ECR_REPOSITORY}:)([^\"']*)_\1${IMAGE_TAG}_" docker-compose.yml ${KUBERNETES_DEPLOYMENT}
 
       - name: Commit and push docker-compose.yml
         env:
@@ -112,7 +113,7 @@ jobs:
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git add docker-compose.yml k8s/minikube/services/vehicle/deployment.yml
+          git add docker-compose.yml ${KUBERNETES_DEPLOYMENT}
           git commit -m "Update docker-compose.yml docker image with new tag $IMAGE_TAG"
           git pull --rebase
           git push

@@ -21,6 +21,7 @@ public class VehicleController {
 
     @PostMapping
     public void addVehicle(@RequestBody AddVehicleRequest request) {
+        log.info("Add vehicle request. VIN is {}", request.vin());
         vehicleService.addVehicle(
                 request.vin(), request.make(), request.model(), request.year(), request.groupName(), request.deviceId());
     }
@@ -33,6 +34,7 @@ public class VehicleController {
 
     @GetMapping("{vehicleId}")
     public Vehicle getVehicle(@PathVariable Integer vehicleId) {
+        log.info("Requested vehicle with id {}", vehicleId);
         return vehicleService.getVehicle(vehicleId);
     }
 
@@ -40,17 +42,20 @@ public class VehicleController {
     public void updateVehicle(
             @PathVariable("vehicleId") Integer vehicleId,
             @RequestBody UpdateVehicleRequest updateRequest) {
+        log.info("Update vehicle request. Vehicle's id is {}", vehicleId);
         vehicleService.updateVehicle(
                 vehicleId, updateRequest.vin(), updateRequest.make(), updateRequest.model(), updateRequest.year());
     }
 
     @PutMapping("update-odometer/{vehicleId}")
     public void updateOdometer(@PathVariable("vehicleId") Integer vehicleId) {
+        log.info("Refresh odometer request for vehicle with id {}", vehicleId);
         vehicleService.updateOdometer(vehicleId);
     }
 
     @DeleteMapping("{vehicleId}")
     public void deleteVehicle(@PathVariable("vehicleId") Integer vehicleId) {
+        log.info("Delete vehicle request. Vehicle's id is {}", vehicleId);
         vehicleService.deleteVehicle(vehicleId);
     }
 
