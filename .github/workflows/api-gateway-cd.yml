@@ -60,7 +60,7 @@ jobs:
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git add docker-compose.yml env.KUBERNETES_DEPLOYMENT
+          git add docker-compose.yml ${KUBERNETES_DEPLOYMENT}
           git commit -m "Update docker-compose.yml docker image with new tag $IMAGE_TAG"
           git pull --rebase
           git push
