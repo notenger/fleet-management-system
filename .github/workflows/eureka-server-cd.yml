@@ -47,11 +47,11 @@ jobs:
             jib:build
           echo "image=$DOCKERHUB_REGISTRY/$DOCKERHUB_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
 
-      - name: Fill in the new image ID in the docker-compose file
+      - name: Fill in the new image ID in the docker-compose and k8s deployment files
         env:
           IMAGE_TAG: ${{ steps.build-number.outputs.BUILD_NUMBER }}
         run: |
-          sed -i -E "s_(${DOCKERHUB_REGISTRY}/${DOCKERHUB_REPOSITORY}:)([^\"']*)_\1${IMAGE_TAG}_" docker-compose.yml
+          sed -i -E "s_(${DOCKERHUB_REGISTRY}/${DOCKERHUB_REPOSITORY}:)([^\"']*)_\1${IMAGE_TAG}_" docker-compose.yml k8s/minikube/services/eureka-server/deployment.yml
 
       - name: Commit and push docker-compose.yml
         env:
@@ -59,7 +59,7 @@ jobs:
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git add docker-compose.yml
+          git add docker-compose.yml k8s/minikube/services/apigw/deployment.yml
           git commit -m "Update docker-compose.yml docker image with new tag $IMAGE_TAG"
           git pull --rebase
           git push

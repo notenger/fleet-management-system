@@ -97,14 +97,14 @@ jobs:
           cluster: ${{ secrets.ECS_CLUSTER }}
           wait-for-service-stability: true
 
-      - name: Fill in the new image ID in the docker-compose file
+      - name: Fill in the new image ID in the docker-compose and k8s deployment files
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REGISTRY_ALIAS: b2y2j9p6
           IMAGE_TAG: ${{ steps.build-number.outputs.BUILD_NUMBER }}
         run: |
           ECR_REGISTRY_FULL_NAME=${ECR_REGISTRY}/${ECR_REGISTRY_ALIAS}
-          sed -i -E "s_(${ECR_REGISTRY_FULL_NAME}/${ECR_REPOSITORY}:)([^\"']*)_\1${IMAGE_TAG}_" docker-compose.yml
+          sed -i -E "s_(${ECR_REGISTRY_FULL_NAME}/${ECR_REPOSITORY}:)([^\"']*)_\1${IMAGE_TAG}_" docker-compose.yml k8s/minikube/services/vehicle/deployment.yml
 
       - name: Commit and push docker-compose.yml
         env:
@@ -112,7 +112,7 @@ jobs:
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git add docker-compose.yml
+          git add docker-compose.yml k8s/minikube/services/vehicle/deployment.yml
           git commit -m "Update docker-compose.yml docker image with new tag $IMAGE_TAG"
           git pull --rebase
           git push
