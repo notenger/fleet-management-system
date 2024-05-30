@@ -55,7 +55,7 @@ services:
       - spring
 
   eureka-server:
-    image: notenger/eureka-server:28.05.2024.13.22.43
+    image: notenger/eureka-server:30.05.2024.08.52.48
     container_name: eureka-server
     ports:
       - "8761:8761"
