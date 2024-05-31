@@ -1,4 +1,4 @@
-import React, { useEffect, useState }  from "react";
+import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import MuiDrawer from "@mui/material/Drawer";
 import Box from "@mui/material/Box";
@@ -95,9 +95,6 @@ export default function Frame() {
   };
 
   const [title, setTitle] = useState("");
-  const [copyright, setCopyright] = useState<React.ReactNode | null>(
-    null
-  );
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -223,8 +220,7 @@ export default function Frame() {
         }}
       >
         <Toolbar />
-        <Outlet context={[setTitle, setCopyright]} />
-        {copyright}
+        <Outlet context={[setTitle]} />
       </Box>
     </Box>
   );

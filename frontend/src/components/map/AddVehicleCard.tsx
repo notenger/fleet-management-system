@@ -8,20 +8,10 @@ import {
   registerDevice,
   getAvailableDevices,
 } from "../../services/httpClient.js";
+import { generateRandomString } from "../../services/helper.js";
 
 export default function AddVehicleCard({ landmark, fetchVehicles }) {
   const [vehicleSpeed, setVehicleSpeed] = useState(400);
-
-  const generateRandomString = (length) => {
-    let result = "";
-    const characters =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    const charactersLength = characters.length;
-    for (let i = 0; i < length; i++) {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-    return result;
-  };
 
   const handleLocateVehicleClick = async () => {
     try {
@@ -44,9 +34,9 @@ export default function AddVehicleCard({ landmark, fetchVehicles }) {
 
       await addVehicle({
         vin: generateRandomString(10),
-        make: "AAA",
-        model: "cc",
-        year: 2016,
+        make: "Global Automotive",
+        model: "Spectra",
+        year: 2018,
         groupName: landmark,
         deviceId: randomDevice.id,
       });

@@ -13,6 +13,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { useAuth } from "../auth/AuthContext";
 import Copyright from "../shared/Copyright";
+import fleetImage from "../../assets/fleet-picture.jpg";
 
 function Login() {
   const auth = useAuth();
@@ -33,7 +34,7 @@ function Login() {
         sm={4}
         md={7}
         sx={{
-          backgroundImage: "url(https://source.unsplash.com/random?wallpapers)",
+          backgroundImage: `url(${fleetImage})`,
           backgroundRepeat: "no-repeat",
           backgroundColor: (t) =>
             t.palette.mode === "light"

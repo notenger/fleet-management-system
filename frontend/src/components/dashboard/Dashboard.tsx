@@ -20,11 +20,10 @@ function Dashboard() {
   });
   const [isConnected, setConnected] = useState(false);
   const [firstMessageReceived, setFirstMessageReceived] = useState(false);
-  const [setTitle, setCopyright] = useOutletContext();
+  const [setTitle] = useOutletContext();
 
   useEffect(() => {
     setTitle("Dashboard");
-    setCopyright(<Copyright sx={{ pt: 4 }} />);
   }, []);
 
   const [fuelConsumptionEfficiency, setFuelConsumptionEfficiency] = useState(0);
@@ -132,6 +131,7 @@ function Dashboard() {
             </Paper>
           </Grid>
         </Grid>
+        <Copyright sx={{ pt: 4 }} />
       </Container>
 
       <SockJsClient
